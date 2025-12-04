@@ -35,5 +35,8 @@ public class ScrapedDataEntity {
 
     @Column(name = "b_team_points")
     private int bTeamPoints;
+    
+    @Column(name = "team_id")
+    private int teamId;
 
 }

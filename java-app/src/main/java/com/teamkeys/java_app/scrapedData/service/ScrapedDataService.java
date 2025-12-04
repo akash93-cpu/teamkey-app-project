@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+//import com.example.demo.exception.NotFoundException;
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
 import com.teamkeys.java_app.scrapedData.repo.ScrapedDataRepo;
 
@@ -17,4 +18,15 @@ public class ScrapedDataService {
 	public List<ScrapedDataEntity> getAll() {
 		return repo.findAll();
 	}
+	
+    public List<ScrapedDataEntity> getByMatchId(int matchId) {
+        List<ScrapedDataEntity> results = repo.findAllByMatchId(matchId);
+
+        if (results.isEmpty()) {
+//            throw new NotFoundException("No matches found with match_id " + matchId);
+        	System.out.println("No matches found with match_id " + matchId);
+        }
+
+        return results;
+    }
 }
