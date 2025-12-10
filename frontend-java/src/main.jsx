@@ -1,12 +1,14 @@
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import './index.css'
-import App from './App.jsx'
-import DisplayTable from './pages/Table.jsx'
+import IndexPage from './index.jsx'
+// import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-    <DisplayTable />
-  </StrictMode>,
+  // <StrictMode>
+  <BrowserRouter>
+    <IndexPage />
+  </BrowserRouter>
+  // </StrictMode>,
 )

@@ -23,7 +23,7 @@ public class ScrapedDataService {
         List<ScrapedDataEntity> results = repo.findAllByMatchId(matchId);
 
         if (results.isEmpty()) {
-//            throw new NotFoundException("No matches found with match_id " + matchId);
+//          throw new NotFoundException("No matches found with match_id " + matchId);
         	System.out.println("No matches found with match_id " + matchId);
         }
 
