@@ -98,6 +98,7 @@ function MyPagination({ total, current, onPageChange }) {
     }
 
     return (
+
         <div style={{ 
             display: 'flex', 
             justifyContent: 'center', 
@@ -110,6 +111,7 @@ function MyPagination({ total, current, onPageChange }) {
                 Page {current} of {total}
             </div>
         </div>
+
     );
 }
 
@@ -117,7 +119,8 @@ export default function DisplayTable() {
     const [data, setData] = useState({
         bands: [],
         totalPage: 0,
-        totalRecords: 0
+        totalRecords: 0,
+        allMatchIds: 0
     });
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(50); // Changed to 50 records per page
@@ -138,11 +141,13 @@ export default function DisplayTable() {
                 if (!response.ok) throw new Error(response.status);
 
                 const result = await response.json();
+                const allMatches = [...new Set(result.map(item => item.matchId))] // returns all matchId 
 
                 setData({
                     bands: result.slice((page - 1) * pageSize, page * pageSize),
                     totalPage: Math.ceil(result.length / pageSize),
-                    totalRecords: result.length
+                    totalRecords: result.length,
+                    allMatchIds: allMatches
                 });
 
             } catch (error) {
@@ -189,6 +194,7 @@ export default function DisplayTable() {
                 <div style={{ fontSize: '14px', color: '#666' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
                 </div>
+
             </div>
 
             {loading ? (
