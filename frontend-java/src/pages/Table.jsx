@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Table } from "react-bootstrap";
 import { Pagination } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "../css/tablePage.css";
 
 function MyPagination({ total, current, onPageChange }) {
@@ -120,11 +121,12 @@ export default function DisplayTable() {
         bands: [],
         totalPage: 0,
         totalRecords: 0,
-        allMatchIds: 0
+        allMatchIds: []
     });
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(50); // Changed to 50 records per page
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -141,13 +143,13 @@ export default function DisplayTable() {
                 if (!response.ok) throw new Error(response.status);
 
                 const result = await response.json();
-                const allMatches = [...new Set(result.map(item => item.matchId))] // returns all matchId 
+                const allMatchesIdValues = [...new Set(result.map(item => item.matchId))]; // returns an array of all matchIds 
 
                 setData({
                     bands: result.slice((page - 1) * pageSize, page * pageSize),
                     totalPage: Math.ceil(result.length / pageSize),
                     totalRecords: result.length,
-                    allMatchIds: allMatches
+                    allMatchIds: allMatchesIdValues
                 });
 
             } catch (error) {
@@ -191,6 +193,21 @@ export default function DisplayTable() {
                         <option value="100">100</option>
                     </select>
                 </div>
+                
+                <div>
+                    <label htmlFor="matchIds" style={{ marginRight: '10px' }}>Filter</label>
+
+                    <select id="matchIds" onChange={(e) => {
+                        const id = e.target.value;
+                        if (id) navigate(`/single-match/${id}`)
+                    }}>
+                        <option value="">--- Select by Match ID ---</option>
+                        {data.allMatchIds.map((id) => (
+                            <option key={id} value={id}>{id}</option>
+                        ))}
+                    </select>
+                </div>
+
                 <div style={{ fontSize: '14px', color: '#666' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
                 </div>

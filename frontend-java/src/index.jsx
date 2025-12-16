@@ -12,7 +12,7 @@ export default function IndexPage() {
         <Routes>
             <Route path="/" element={<App />} />
             <Route path="/table" element={<DisplayTable />} />
-            <Route path="/single-match" element={<SingleMatchView />}/>
+            <Route path="/single-match/:id" element={<SingleMatchView />} />
         </Routes>
     )
 }
