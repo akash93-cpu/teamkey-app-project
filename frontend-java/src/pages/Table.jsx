@@ -201,7 +201,7 @@ export default function DisplayTable() {
                         const id = e.target.value;
                         if (id) navigate(`/single-match/${id}`)
                     }}>
-                        <option value="">--- Select by Match ID ---</option>
+                        <option value="">--- Select Match ID ---</option>
                         {data.allMatchIds.map((id) => (
                             <option key={id} value={id}>{id}</option>
                         ))}
