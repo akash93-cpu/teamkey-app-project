@@ -27,4 +27,17 @@ public class TeamRosterController {
 	public List<TeamRosterEntity> getAllTeams() {
 		return service.getAll();
 	}
+	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping("teams/{teamId}")
+	public List<TeamRosterEntity> getAllTeamsById(@PathVariable int teamId) {
+		return service.getByTeamId(teamId);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:5173")
+	@GetMapping("team-names/{teamName}")
+	public List<TeamRosterEntity> getAllTeamsByName(@PathVariable String teamName) {
+		return service.getByTeamName(teamName);
+	}
+	
 }

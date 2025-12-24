@@ -1,26 +1,27 @@
 import { useState, useEffect, useCallback } from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "../css/tablePage.css";
 import MyPagination from "./Pagination.jsx";
 
-export default function DisplayTable() {
+export default function TeamRosterTable() {
+
     const [data, setData] = useState({
-        bands: [],
+        teamData: [],
         totalPage: 0,
         totalRecords: 0,
-        allMatchIds: [],
-    });
+        allTeamIds: []
+    })
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(50); // Changed to 50 records per page
-    const [loading, setLoading] = useState(false);
+    const [pageSize, setPageSize] = useState(50);
+    const [loading, isLoading] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
+            isLoading(true);
             try {
-                const response = await fetch("http://localhost:8080/scraped", {
+                const response = await fetch("http://localhost:8080/team-roster", {
                     method: "GET",
                     credentials: 'include',
                     headers: {
@@ -31,22 +32,21 @@ export default function DisplayTable() {
                 if (!response.ok) throw new Error(response.status);
 
                 const result = await response.json();
-                const allMatchesIdValues = [...new Set(result.map(item => item.matchId))]; // returns an array of all matchIds 
+                const allTeamIdValues = [...new Set(result.map(item => item.teamId))]; // returns an array of all matchIds 
 
                 setData({
-                    bands: result.slice((page - 1) * pageSize, page * pageSize),
+                    teamData: result.slice((page - 1) * pageSize, page * pageSize),
                     totalPage: Math.ceil(result.length / pageSize),
                     totalRecords: result.length,
-                    allMatchIds: allMatchesIdValues
+                    allTeamIds: allTeamIdValues
                 });
 
             } catch (error) {
                 console.error(error);
             } finally {
-                setLoading(false);
+                isLoading(false);
             }
-        };
-
+        }
         fetchData();
     }, [page, pageSize]);
 
@@ -61,6 +61,7 @@ export default function DisplayTable() {
     };
 
     return (
+
         <div style={{ padding: '20px' }}>
             <div style={{ 
                 marginBottom: '15px', 
@@ -77,24 +78,22 @@ export default function DisplayTable() {
                     >
                         <option value="10">10</option>
                         <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
                     </select>
                 </div>
                 
-                <div>
+                {/* <div>
                     <label htmlFor="matchIds" style={{ marginRight: '10px' }}>Filter</label>
 
                     <select id="matchIds" onChange={(e) => {
                         const id = e.target.value;
                         if (id) navigate(`/single-match/${id}`)
                     }}>
-                        <option value="">--- Select Match ID ---</option>
+                        <option value="">--- Select Team ID ---</option>
                         {data.allMatchIds.map((id) => (
                             <option key={id} value={id}>{id}</option>
                         ))}
                     </select>
-                </div>
+                </div> */}
 
                 <div style={{ fontSize: '14px', color: '#666' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
@@ -110,31 +109,23 @@ export default function DisplayTable() {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>ID</th>
-                                <th>Match ID</th>
-                                <th>Team ID</th>
-                                <th>A team points</th>
-                                <th>B team points</th>
-                                <th>Quarter</th>
-                                <th>Action</th>
-                                <th>Time</th>
                                 <th>Player ID</th>
+                                <th>Player Name</th>
+                                <th>Player Surname</th>
+                                <th>Team ID</th>
+                                <th>Team Name</th>                                
                             </tr>
                         </thead>
                         <tbody>
-                            {data.bands.length > 0 ? (
-                                data.bands.map((band, index) => (
+                            {data.teamData.length > 0 ? (
+                                data.teamData.map((team, index) => (
                                     <tr key={index}>
                                         <td>{(page - 1) * pageSize + (index + 1)}</td>
-                                        <td>{band.id}</td>
-                                        <td>{band.matchId}</td>
-                                        <td>{band.teamId}</td>
-                                        <td>{band.ateamPoints}</td>
-                                        <td>{band.bteamPoints}</td>
-                                        <td>{band.quarter}</td>
-                                        <td>{band.action}</td>
-                                        <td>{band.time}</td>
-                                        <td>{band.playerId}</td>
+                                        <td>{team.playerId}</td>
+                                        <td>{team.playerName}</td>
+                                        <td>{team.playerSurname}</td>
+                                        <td>{team.teamId}</td>
+                                        <td>{team.teamName}</td>
                                     </tr>
                                 ))
                             ) : (
@@ -156,6 +147,9 @@ export default function DisplayTable() {
                     )}
                 </>
             )}
+
         </div>
-    );
+
+    )
+
 }
