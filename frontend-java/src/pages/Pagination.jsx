@@ -17,7 +17,7 @@ export default function MyPagination({ total, current, onPageChange }) {
     // First page
     items.push(
         <Pagination.Item
-            key={1}
+            key="page-1"
             active={current === 1}
             onClick={() => onPageChange(1)}
         >
@@ -55,9 +55,11 @@ export default function MyPagination({ total, current, onPageChange }) {
 
     // Middle pages
     for (let page = startPage; page <= endPage; page++) {
+        if (page === 1 || page === total) continue;
+
         items.push(
             <Pagination.Item
-                key={page}
+                key={`page-${page}`}
                 active={page === current}
                 onClick={() => onPageChange(page)}
             >
@@ -75,7 +77,7 @@ export default function MyPagination({ total, current, onPageChange }) {
     if (total > 1) {
         items.push(
             <Pagination.Item
-                key={total}
+                key={`page-${total}`}
                 active={current === total}
                 onClick={() => onPageChange(total)}
             >

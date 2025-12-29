@@ -33,7 +33,8 @@ export default function TeamRosterTable() {
 
                 const result = await response.json();
                 const allTeamIdValues = [...new Set(result.map(item => item.teamId))]; // returns an array of all matchIds 
-
+                console.log(allTeamIdValues);
+                
                 setData({
                     teamData: result.slice((page - 1) * pageSize, page * pageSize),
                     totalPage: Math.ceil(result.length / pageSize),
@@ -49,6 +50,7 @@ export default function TeamRosterTable() {
         }
         fetchData();
     }, [page, pageSize]);
+
 
     const handlePageChange = useCallback((p) => {
         setPage(p);
@@ -147,9 +149,6 @@ export default function TeamRosterTable() {
                     )}
                 </>
             )}
-
         </div>
-
-    )
-
+    );
 }
