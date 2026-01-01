@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "../css/tablePage.css";
+import "../css/table-page.css";
 import MyPagination from "./Pagination.jsx";
 
 export default function DisplayTable() {
