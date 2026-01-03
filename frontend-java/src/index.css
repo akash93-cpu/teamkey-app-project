@@ -68,8 +68,9 @@ button:focus-visible {
 } */
 
 
-body {
+html, body {
+  height: 100%;
+  margin: 0;
   font-family: "Inconsolata", monospace;
   font-weight: 500;
-  padding-top: 70px;
 }

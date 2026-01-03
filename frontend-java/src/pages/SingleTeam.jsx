@@ -54,7 +54,7 @@ export default function SingleTeamView() {
     };
 
     return (
-        <div style={{ padding: '20px' }}>
+        <div style={{ padding: '20px', marginTop: '50px' }}>
             <div style={{ 
                 marginBottom: '15px', 
                 display: 'flex', 

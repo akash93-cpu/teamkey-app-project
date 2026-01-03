@@ -1,21 +1,22 @@
-.nav-center {
+/* .nav-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-}
+} */
+ 
 .custom-navbar {
   background: linear-gradient(
     90deg,
     rgba(216, 203, 203, 0.5),
     rgba(121, 3, 39, 0.5)
   );
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
 }
 
 .navbar .nav-link {
   position: relative;
   padding-bottom: 4px;
-  color: inherit;
+  color: #3b0d23;
 }
 
 .navbar .nav-link::after {
@@ -25,7 +26,7 @@
   bottom: 0;
   width: 0%;
   height: 2px;
-  background-color: currentColor;
+  background-color: whitesmoke;
   transition: width 0.3s ease;
 }
 
@@ -41,6 +42,7 @@
 }
 
 #nav-logo:hover {
+  
   border-color: #ffffff;
   transform: scale(1.05);
 }
