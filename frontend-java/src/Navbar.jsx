@@ -17,7 +17,7 @@ export default function NavigationBar() {
                     <Navbar.Brand id="nav-logo" href="/"><img src={logo} /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        {/* Center-ish links */}
+                        
                         <Nav className="mx-auto gap-4">
                             <Nav.Link href="/table">Matches</Nav.Link>
                             <Nav.Link>Statistics</Nav.Link>
