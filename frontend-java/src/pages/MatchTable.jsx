@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Table } from "react-bootstrap";
+import { DropdownButton, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
 import "../css/table-page.css";
 import MyPagination from "./Pagination.jsx";
 
@@ -11,12 +12,20 @@ export default function DisplayTable() {
         totalRecords: 0,
         allMatchIds: [],
     });
+    const [matchEvents, setMatchEvents] = useState({ matchEvent: [] })
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(50); // Changed to 50 records per page
     const [loading, setLoading] = useState(false);
+    const [loadingEvents, setLoadingEvents] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const handleSelect = (eventKey) => {
+        if (eventKey) {
+            navigate(`/single-match/${eventKey}`);
+        }
+    };
+
+    useEffect(() => { // first fetch query
         const fetchData = async () => {
             setLoading(true);
             try {
@@ -50,6 +59,31 @@ export default function DisplayTable() {
         fetchData();
     }, [page, pageSize]);
 
+    useEffect(() => { // second fetch query
+        const fetchInfo = async () => {
+            setLoadingEvents(true);
+            try{
+                const response = await fetch("http://localhost:8080/scraped/matches/getAllEvents", {
+                    method: "GET",
+                    credentials: 'include',
+                    headers: {
+                        "Authorization": "Basic " + btoa("admin:test")
+                    }
+                });
+
+                if (!response.ok) throw new Error(response.status);
+
+                const res = await response.json();
+                setMatchEvents({ matchEvent: res });
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoadingEvents(false);
+            }
+        };
+        fetchInfo();
+    }, []);
+
     const handlePageChange = useCallback((p) => {
         setPage(p);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -61,17 +95,45 @@ export default function DisplayTable() {
     };
 
     return (
-        <div style={{ padding: '20px', marginTop: '50px' }}>
-            <div style={{ 
-                marginBottom: '15px', 
-                display: 'flex', 
+        <div style={{ padding: '20px', marginTop: '50px', color: 'whitesmoke', backgroundColor: 'slategray' }}>
+
+            <div className="top-heading">
+
+                <p>Japanese B League</p>
+
+                    <div className="match-filter">
+                        <label htmlFor="matchIds">Filter</label>
+                        <DropdownButton
+                            id="match-id-dropdown"
+                            title="--- Select Match ID ---"
+                            onSelect={handleSelect}
+                            variant="light"
+                        >
+                            {data.allMatchIds.map((id) => (
+                                <Dropdown.Item key={id} eventKey={id}>
+                                    {id}
+                                </Dropdown.Item>
+                            ))}
+                        </DropdownButton>
+                    </div>
+
+                <p>2020/2021</p>
+
+            </div>
+
+            <div style={{
+                marginTop: '10px',
+                marginBottom: '10px',
+                display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                padding: '0.5rem'
             }}>
+
                 <div>
                     <label style={{ marginRight: '10px' }}>Records per page:</label>
-                    <select 
-                        value={pageSize} 
+                    <select
+                        value={pageSize}
                         onChange={handlePageSizeChange}
                         style={{ padding: '5px' }}
                     >
@@ -81,28 +143,42 @@ export default function DisplayTable() {
                         <option value="100">100</option>
                     </select>
                 </div>
-                
-                <div>
-                    <label htmlFor="matchIds" style={{ marginRight: '10px' }}>Filter</label>
 
-                    <select id="matchIds" onChange={(e) => {
-                        const id = e.target.value;
-                        if (id) navigate(`/single-match/${id}`)
-                    }}>
-                        <option value="">--- Select Match ID ---</option>
-                        {data.allMatchIds.map((id) => (
-                            <option key={id} value={id}>{id}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div style={{ fontSize: '14px', color: '#666' }}>
+                <div style={{ fontSize: '14px', color: 'whitesmoke' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
                 </div>
 
             </div>
+        <div className="table-section">
+            <div className="sidebar">
+                <hr />
+                <p>Total PBP events: {data.totalRecords}</p>
+                <hr />  
+                <p>PBP events per match</p>
 
-            {loading ? (
+                {loadingEvents ? (
+                    <div style={{ textAlign: 'center', padding: '50px' }}>Loading data...</div>
+                ) : (
+                    <div>
+                        {matchEvents.matchEvent.length > 0 ? (
+                            matchEvents.matchEvent.map((match, index) => (
+                                <div key={index}>
+                                    <p>Match ID {match.matchId}</p>
+                                    <p>Events: {match.eventsCount}</p>
+                                    <hr />
+                                </div>
+                            ))) : (
+                                <p>No data!</p>
+                            
+                        )}
+                    </div>
+                )}
+
+            </div>
+
+            <div className="main-table">
+
+            {loading ? (    
                 <div style={{ textAlign: 'center', padding: '50px' }}>Loading...</div>
             ) : (
                 <>
@@ -148,7 +224,7 @@ export default function DisplayTable() {
                     </Table>
 
                     {data.totalPage > 1 && (
-                        <MyPagination 
+                        <MyPagination
                             total={data.totalPage}
                             current={page}
                             onPageChange={handlePageChange}
@@ -156,6 +232,10 @@ export default function DisplayTable() {
                     )}
                 </>
             )}
+            
+            </div>
         </div>
+
+        </div>    
     );
 }

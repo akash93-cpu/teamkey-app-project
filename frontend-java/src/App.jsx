@@ -71,53 +71,52 @@ function App() {
               <div
                 className="d-flex align-items-center justify-content-center"
                 style={{
-                  height: '400px',
-                  backgroundColor: '#6c757d',
+                  height: '21vh',
+                  backgroundColor: '#6c757dff',
                   color: 'white',
-                  fontSize: '2rem'
+                  fontSize: '2rem',
+                  borderRadius: '1.4rem',
                 }}
               >
-                First slide
               </div>
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <Carousel.Caption className='caption-text'>
+                <h3>Accuracy</h3>
+                <p>Complete data prescriptions for all game matches.</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
               <div
                 className="d-flex align-items-center justify-content-center"
                 style={{
-                  height: '400px',
+                  height: '21vh',
                   backgroundColor: '#6c757d',
                   color: 'white',
-                  fontSize: '2rem'
+                  fontSize: '2rem',
+                  borderRadius: '1.4rem',
                 }}
               >
-                Second slide
               </div>
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <Carousel.Caption className='caption-text'>
+                <h3>Highlights</h3>
+                <p>Detailed player metrics for every match.</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
               <div
                 className="d-flex align-items-center justify-content-center"
                 style={{
-                  height: '400px',
+                  height: '21vh',
                   backgroundColor: '#6c757d',
                   color: 'white',
-                  fontSize: '2rem'
+                  fontSize: '2rem',
+                  borderRadius: '1.4rem',
                 }}
               >
-                Third slide
               </div>
-
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
+              <Carousel.Caption className='caption-text'>
+                <h3>Versatility</h3>
                 <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                  Combined performance throughput for all avenues.
                 </p>
               </Carousel.Caption>
             </Carousel.Item>

@@ -5,7 +5,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaRegUserCircle } from "react-icons/fa";
 
 import logo from './assets/logo.png';
-
 import './css/navbar-style.css';
 
 export default function NavigationBar() {
@@ -30,8 +29,8 @@ export default function NavigationBar() {
                         </Nav>
 
                         <Nav className="ms-auto">
-                            <Nav.Link href="/login">
-                                <FaRegUserCircle size={26} /> Login
+                            <Nav.Link href="/login" className="icon-link">
+                                <FaRegUserCircle size={26} />
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

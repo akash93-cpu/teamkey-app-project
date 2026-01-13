@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 //import com.example.demo.exception.NotFoundException;
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
+import com.teamkeys.java_app.scrapedData.repo.MatchEvents;
 import com.teamkeys.java_app.scrapedData.repo.ScrapedDataRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -29,4 +30,8 @@ public class ScrapedDataService {
 
         return results;
     }
+    
+    public List<MatchEvents> getAllEvents() {
+    	return repo.findAllMatchEvents();
+    }	
 }

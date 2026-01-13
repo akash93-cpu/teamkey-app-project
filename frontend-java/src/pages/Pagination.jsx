@@ -106,7 +106,7 @@ export default function MyPagination({ total, current, onPageChange }) {
             gap: '10px'
         }}>
             <Pagination size="sm">{items}</Pagination>
-            <div style={{ fontSize: '14px', color: '#666' }}>
+            <div style={{ fontSize: '14px', color: '#f3f3f3' }}>
                 Page {current} of {total}
             </div>
         </div>
