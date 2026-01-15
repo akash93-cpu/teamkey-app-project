@@ -1,0 +1,21 @@
+.top-heading {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0.7rem;
+    background-color: #23598659;
+}
+
+.top-heading p {
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    font-size: medium;
+}
+
+.team-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

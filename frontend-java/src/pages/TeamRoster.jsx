@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { Table } from "react-bootstrap";
+import { Table, DropdownButton, DropdownItem } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import MyPagination from "./Pagination.jsx";
+import Dropdown from 'react-bootstrap/Dropdown';
+
+import '../css/team-roster-styles.css';
 
 export default function TeamRosterTable() {
 
@@ -9,13 +12,19 @@ export default function TeamRosterTable() {
         teamData: [],
         totalPage: 0,
         totalRecords: 0,
-        allTeamIds: []
+        allTeams: []
     })
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(50);
     const [loading, isLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const handleSelect = (eventKey) => {
+        if (eventKey) {
+            navigate(`/team-names/${eventKey}`);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,14 +41,14 @@ export default function TeamRosterTable() {
                 if (!response.ok) throw new Error(response.status);
 
                 const result = await response.json();
-                const allTeamIdValues = [...new Set(result.map(item => item.teamId))]; // returns an array of all matchIds 
-                console.log(allTeamIdValues);
+                const allTeamNames = [...new Set(result.map(item => item.teamName))]; // returns an array of all matchIds 
+                console.log(allTeamNames);
                 
                 setData({
                     teamData: result.slice((page - 1) * pageSize, page * pageSize),
                     totalPage: Math.ceil(result.length / pageSize),
                     totalRecords: result.length,
-                    allTeamIds: allTeamIdValues
+                    allTeams: allTeamNames
                 });
 
             } catch (error) {
@@ -64,13 +73,41 @@ export default function TeamRosterTable() {
 
     return (
 
-        <div style={{ padding: '20px', marginTop: '50px' }}>
+        <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>
+            <div className="top-heading">
+
+            <p>Japanese B League</p>
+                <div className="team-filter">
+                    <label htmlFor="teamNames">Filter</label>
+
+                    <DropdownButton 
+                    title='--- Select Team----'
+                    onSelect={handleSelect}
+                    variant="light"
+                    >
+                        {data.allTeams.map((id) => (
+                            <Dropdown.Item key={id} eventKey={id}>
+                                {id}
+                            </Dropdown.Item>
+                        ))}
+
+                    </DropdownButton>
+
+                </div>
+            <p>2020/2021</p>
+
+            </div>
+
             <div style={{ 
-                marginBottom: '15px', 
-                display: 'flex', 
+                marginTop: '10px',
+                marginBottom: '10px',
+                display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center'
-            }}>
+                alignItems: 'center',
+                padding: '0.5rem'
+
+                }}>
+
                 <div>
                     <label style={{ marginRight: '10px' }}>Records per page:</label>
                     <select 
@@ -84,19 +121,6 @@ export default function TeamRosterTable() {
                     </select>
                 </div>
                 
-                {/* <div>
-                    <label htmlFor="matchIds" style={{ marginRight: '10px' }}>Filter</label>
-
-                    <select id="matchIds" onChange={(e) => {
-                        const id = e.target.value;
-                        if (id) navigate(`/single-match/${id}`)
-                    }}>
-                        <option value="">--- Select Team ID ---</option>
-                        {data.allMatchIds.map((id) => (
-                            <option key={id} value={id}>{id}</option>
-                        ))}
-                    </select>
-                </div> */}
 
                 <div style={{ fontSize: '14px', color: '#666' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records

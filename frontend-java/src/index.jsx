@@ -21,7 +21,7 @@ export default function IndexPage() {
                 <Route path="/table" element={<DisplayTable />} />
                 <Route path="/team-roster" element={<TeamRosterTable />} />
                 <Route path="/single-match/:id" element={<SingleMatchView />} />
-                <Route path="/team-roster/team/:id" element={<SingleTeamView />} />
+                <Route path="/team-names/:id" element={<SingleTeamView />} />
             </Routes>
             <Footer />
         </>

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-//import com.example.demo.exception.NotFoundException;
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
 import com.teamkeys.java_app.scrapedData.repo.MatchEvents;
 import com.teamkeys.java_app.scrapedData.repo.ScrapedDataRepo;
+import com.teamkeys.java_app.exceptions.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,14 +24,17 @@ public class ScrapedDataService {
         List<ScrapedDataEntity> results = repo.findAllByMatchId(matchId);
 
         if (results.isEmpty()) {
-//          throw new NotFoundException("No matches found with match_id " + matchId);
-        	System.out.println("No matches found with match_id " + matchId);
+          throw new NotFoundException("No matches found with match_id " + matchId);
+//        	System.out.println("No matches found with match_id " + matchId);
         }
-
         return results;
     }
     
     public List<MatchEvents> getAllEvents() {
-    	return repo.findAllMatchEvents();
+//    	return repo.findAllMatchEvents();
+    	List<MatchEvents> resultsEvents = repo.findAllMatchEvents();
+    	
+    	if (resultsEvents.isEmpty()) throw new NotFoundException("No values found");
+    	return resultsEvents;
     }	
 }

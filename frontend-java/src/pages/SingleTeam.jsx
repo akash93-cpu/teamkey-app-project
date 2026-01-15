@@ -19,7 +19,7 @@ export default function SingleTeamView() {
         const fetchTeam = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:8080/team-roster/teams/${id}`, {
+                const response = await fetch(`http://localhost:8080/team-roster/team-names/${id}`, {
                     method: "GET",
                     credentials: 'include',
                     headers: {
@@ -73,7 +73,7 @@ export default function SingleTeamView() {
                     </select>
                 </div>
                 <div>
-                    Team ID 
+                    Team: {id}
                 </div>
                 <div style={{ fontSize: '14px', color: '#666' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
@@ -131,5 +131,4 @@ export default function SingleTeamView() {
 
         </div>
     );
-
 }

@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/scraped")
 @RequiredArgsConstructor
 public class ScrapedDataController {
+	
 	private final ScrapedDataService service;
 	
 	@CrossOrigin(origins="http://localhost:5173")
@@ -38,6 +39,5 @@ public class ScrapedDataController {
 	public List<ScrapedDataEntity> getMatches(@PathVariable int matchId) {
 		return service.getByMatchId(matchId);
 	}
-	
 	
 }

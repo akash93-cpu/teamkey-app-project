@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
-import com.teamkeys.java_app.scrapedData.service.ScrapedDataService;
 import com.teamkeys.java_app.teamRoster.entity.TeamRosterEntity;
 import com.teamkeys.java_app.teamRoster.service.TeamRosterService;
 
@@ -29,13 +28,13 @@ public class TeamRosterController {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:5173")
-	@GetMapping("teams/{teamId}")
+	@GetMapping("/teams/{teamId}")
 	public List<TeamRosterEntity> getAllTeamsById(@PathVariable int teamId) {
 		return service.getByTeamId(teamId);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:5173")
-	@GetMapping("team-names/{teamName}")
+	@GetMapping("/team-names/{teamName}")
 	public List<TeamRosterEntity> getAllTeamsByName(@PathVariable String teamName) {
 		return service.getByTeamName(teamName);
 	}

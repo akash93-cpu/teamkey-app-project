@@ -3,7 +3,7 @@ package com.teamkeys.java_app.teamRoster.service;
 import java.util.List;
 import com.teamkeys.java_app.teamRoster.entity.TeamRosterEntity;
 import com.teamkeys.java_app.teamRoster.repo.TeamRosterRepo;
-
+import com.teamkeys.java_app.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,14 @@ public class TeamRosterService {
 	public List<TeamRosterEntity> getByTeamId(int teamId) {
 		List<TeamRosterEntity> teamResults = repo.findAllByTeamId(teamId);
 		
-		if (teamResults.isEmpty()) System.out.println("No team with "+ teamResults + " found");
+		if (teamResults.isEmpty()) throw new NotFoundException("No team with "+ teamResults + " found");
 		return teamResults;
 	}
 	
 	public List<TeamRosterEntity> getByTeamName(String teamName) {
 		List<TeamRosterEntity> teamNameResultsEntities = repo.findAllByTeamName(teamName);
 		
-		if (teamNameResultsEntities.isEmpty()) System.out.println("No team with " + teamNameResultsEntities + " found");
+		if (teamNameResultsEntities.isEmpty()) throw new NotFoundException("No team with " + teamNameResultsEntities + " found");
 		return teamNameResultsEntities;
 	}
 	
