@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { Table, DropdownButton, DropdownItem } from "react-bootstrap";
+import { Table, DropdownButton } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import MyPagination from "./Pagination.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import { LuLoaderPinwheel } from "react-icons/lu";
+import { checkStatus } from "../../status.js";
 import '../css/team-roster-styles.css';
 
 export default function TeamRosterTable() {
@@ -30,12 +31,14 @@ export default function TeamRosterTable() {
         const fetchData = async () => {
             isLoading(true);
             try {
+                await checkStatus();
                 const response = await fetch("http://localhost:8080/team-roster", {
                     method: "GET",
                     credentials: 'include',
                     headers: {
                         "Authorization": "Basic " + btoa("admin:test")
                     }
+
                 });
 
                 if (!response.ok) throw new Error(response.status);
@@ -72,6 +75,8 @@ export default function TeamRosterTable() {
     };
 
     return (
+        <>
+        <div className="teams-roster-main">
 
         <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>
             <div className="top-heading">
@@ -104,12 +109,10 @@ export default function TeamRosterTable() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: '0.5rem'
-
-                }}>
+                padding: '0.5rem'   }}>
 
                 <div>
-                    <label style={{ marginRight: '10px' }}>Records per page:</label>
+                    <label style={{ marginRight: '10px', color: "antiquewhite" }}>Records per page:</label>
                     <select 
                         value={pageSize} 
                         onChange={handlePageSizeChange}
@@ -120,16 +123,15 @@ export default function TeamRosterTable() {
                         <option value="50">50</option>
                     </select>
                 </div>
-                
 
-                <div style={{ fontSize: '14px', color: '#666' }}>
+                <div style={{ fontSize: '14px', color: 'antiquewhite' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
                 </div>
 
             </div>
 
             {loading ? (
-                <div style={{ textAlign: 'center', padding: '50px' }}>Loading...</div>
+                <div style={{ textAlign: 'center', padding: '50px', color: 'antiquewhite' }}><LuLoaderPinwheel size={35} style={{color: 'antiquewhite'}}/>Loading...</div>
             ) : (
                 <>
                     <Table striped bordered hover className="custom-table">
@@ -175,5 +177,7 @@ export default function TeamRosterTable() {
                 </>
             )}
         </div>
+        </div>
+        </>
     );
 }

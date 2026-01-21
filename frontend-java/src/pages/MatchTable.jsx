@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import "../css/table-page.css";
 import MyPagination from "./Pagination.jsx";
+import { checkStatus } from "../../status.js";
 
 export default function DisplayTable() {
+
     const [data, setData] = useState({
         bands: [],
         totalPage: 0,
@@ -18,7 +20,6 @@ export default function DisplayTable() {
     const [loading, setLoading] = useState(false);
     const [loadingEvents, setLoadingEvents] = useState(false);
     const navigate = useNavigate();
-
     const handleSelect = (eventKey) => {
         if (eventKey) {
             navigate(`/single-match/${eventKey}`);
@@ -29,12 +30,14 @@ export default function DisplayTable() {
         const fetchData = async () => {
             setLoading(true);
             try {
+                await checkStatus();
                 const response = await fetch("http://localhost:8080/scraped", {
                     method: "GET",
                     credentials: 'include',
                     headers: {
                         "Authorization": "Basic " + btoa("admin:test")
                     }
+
                 });
 
                 if (!response.ok) throw new Error(response.status);
@@ -55,20 +58,21 @@ export default function DisplayTable() {
                 setLoading(false);
             }
         };
-
         fetchData();
     }, [page, pageSize]);
 
     useEffect(() => { // second fetch query
         const fetchInfo = async () => {
             setLoadingEvents(true);
-            try{
+            try {
+                await checkStatus();
                 const response = await fetch("http://localhost:8080/scraped/matches/getAllEvents", {
                     method: "GET",
                     credentials: 'include',
                     headers: {
                         "Authorization": "Basic " + btoa("admin:test")
                     }
+
                 });
 
                 if (!response.ok) throw new Error(response.status);
@@ -95,11 +99,15 @@ export default function DisplayTable() {
     };
 
     return (
-        <div style={{ padding: '20px', marginTop: '50px', color: 'whitesmoke', backgroundColor: 'slategray' }}>
+        <>
+            <div className="matches-banner">
+                <p>All the matches in one place.</p>
+            </div>
+            <div style={{ padding: '20px', color: 'whitesmoke', backgroundColor: 'slategray' }}>
 
-            <div className="top-heading">
+                <div className="top-heading">
 
-                <p>Japanese B League</p>
+                    <p>Japanese B League</p>
 
                     <div className="match-filter">
                         <label htmlFor="matchIds">Filter</label>
@@ -117,125 +125,126 @@ export default function DisplayTable() {
                         </DropdownButton>
                     </div>
 
-                <p>2020/2021</p>
+                    <p>2020/2021</p>
 
-            </div>
-
-            <div style={{
-                marginTop: '10px',
-                marginBottom: '10px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.5rem'
-            }}>
-
-                <div>
-                    <label style={{ marginRight: '10px' }}>Records per page:</label>
-                    <select
-                        value={pageSize}
-                        onChange={handlePageSizeChange}
-                        style={{ padding: '5px' }}
-                    >
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
                 </div>
 
-                <div style={{ fontSize: '14px', color: 'whitesmoke' }}>
-                    Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
-                </div>
+                <div style={{
+                    marginTop: '10px',
+                    marginBottom: '10px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '0.5rem'
+                }}>
 
-            </div>
-        <div className="table-section">
-            <div className="sidebar">
-                <hr />
-                <p>Total PBP events: {data.totalRecords}</p>
-                <hr />  
-                <p>PBP events per match</p>
-
-                {loadingEvents ? (
-                    <div style={{ textAlign: 'center', padding: '50px' }}>Loading data...</div>
-                ) : (
                     <div>
-                        {matchEvents.matchEvent.length > 0 ? (
-                            matchEvents.matchEvent.map((match, index) => (
-                                <div key={index}>
-                                    <p>Match ID {match.matchId}</p>
-                                    <p>Events: {match.eventsCount}</p>
-                                    <hr />
-                                </div>
-                            ))) : (
-                                <p>No data!</p>
-                            
-                        )}
+                        <label style={{ marginRight: '10px' }}>Records per page:</label>
+                        <select
+                            value={pageSize}
+                            onChange={handlePageSizeChange}
+                            style={{ padding: '5px' }}
+                        >
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
                     </div>
-                )}
+
+                    <div style={{ fontSize: '14px', color: 'whitesmoke' }}>
+                        Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
+                    </div>
+
+                </div>
+                <div className="table-section">
+                    <div className="sidebar">
+                        <hr />
+                        <p>Total PBP events: {data.totalRecords}</p>
+                        <hr />
+                        <p>PBP events per match</p>
+
+                        {loadingEvents ? (
+                            <div style={{ textAlign: 'center', padding: '50px' }}>Loading data...</div>
+                        ) : (
+                            <div>
+                                {matchEvents.matchEvent.length > 0 ? (
+                                    matchEvents.matchEvent.map((match, index) => (
+                                        <div key={index}>
+                                            <p>Match ID {match.matchId}</p>
+                                            <p>Events: {match.eventsCount}</p>
+                                            <hr />
+                                        </div>
+                                    ))) : (
+                                    <p>No data!</p>
+
+                                )}
+                            </div>
+                        )}
+
+                    </div>
+
+                    <div className="main-table">
+
+                        {loading ? (
+                            <div style={{ textAlign: 'center', padding: '50px' }}>Loading...</div>
+                        ) : (
+                            <>
+                                <Table striped bordered hover className="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ID</th>
+                                            <th>Match ID</th>
+                                            <th>Team ID</th>
+                                            <th>A team points</th>
+                                            <th>B team points</th>
+                                            <th>Quarter</th>
+                                            <th>Action</th>
+                                            <th>Time</th>
+                                            <th>Player ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data.bands.length > 0 ? (
+                                            data.bands.map((band, index) => (
+                                                <tr key={index}>
+                                                    <td>{(page - 1) * pageSize + (index + 1)}</td>
+                                                    <td>{band.id}</td>
+                                                    <td>{band.matchId}</td>
+                                                    <td>{band.teamId}</td>
+                                                    <td>{band.ateamPoints}</td>
+                                                    <td>{band.bteamPoints}</td>
+                                                    <td>{band.quarter}</td>
+                                                    <td>{band.action}</td>
+                                                    <td>{band.time}</td>
+                                                    <td>{band.playerId}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="10" style={{ textAlign: 'center' }}>
+                                                    No data available
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+
+                                {data.totalPage > 1 && (
+                                    <MyPagination
+                                        total={data.totalPage}
+                                        current={page}
+                                        onPageChange={handlePageChange}
+                                    />
+                                )}
+                            </>
+                        )}
+
+                    </div>
+                </div>
 
             </div>
-
-            <div className="main-table">
-
-            {loading ? (    
-                <div style={{ textAlign: 'center', padding: '50px' }}>Loading...</div>
-            ) : (
-                <>
-                    <Table striped bordered hover className="custom-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>ID</th>
-                                <th>Match ID</th>
-                                <th>Team ID</th>
-                                <th>A team points</th>
-                                <th>B team points</th>
-                                <th>Quarter</th>
-                                <th>Action</th>
-                                <th>Time</th>
-                                <th>Player ID</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.bands.length > 0 ? (
-                                data.bands.map((band, index) => (
-                                    <tr key={index}>
-                                        <td>{(page - 1) * pageSize + (index + 1)}</td>
-                                        <td>{band.id}</td>
-                                        <td>{band.matchId}</td>
-                                        <td>{band.teamId}</td>
-                                        <td>{band.ateamPoints}</td>
-                                        <td>{band.bteamPoints}</td>
-                                        <td>{band.quarter}</td>
-                                        <td>{band.action}</td>
-                                        <td>{band.time}</td>
-                                        <td>{band.playerId}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="10" style={{ textAlign: 'center' }}>
-                                        No data available
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </Table>
-
-                    {data.totalPage > 1 && (
-                        <MyPagination
-                            total={data.totalPage}
-                            current={page}
-                            onPageChange={handlePageChange}
-                        />
-                    )}
-                </>
-            )}
-            
-            </div>
-        </div>
-
-        </div>    
+        </>
     );
 }

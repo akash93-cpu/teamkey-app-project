@@ -6,6 +6,7 @@ import DisplayTable from "./pages/MatchTable.jsx";
 import SingleMatchView from './pages/SingleMatch.jsx';
 import TeamRosterTable from './pages/TeamRoster.jsx';
 import SingleTeamView from './pages/SingleTeam.jsx';
+import { StatsHomePage } from './pages/StatisticsHome.jsx';
 import Footer from './Footer.jsx';
 
 export default function IndexPage() {
@@ -22,6 +23,7 @@ export default function IndexPage() {
                 <Route path="/team-roster" element={<TeamRosterTable />} />
                 <Route path="/single-match/:id" element={<SingleMatchView />} />
                 <Route path="/team-names/:id" element={<SingleTeamView />} />
+                <Route path='/stats-home' element={<StatsHomePage />}/>
             </Routes>
             <Footer />
         </>

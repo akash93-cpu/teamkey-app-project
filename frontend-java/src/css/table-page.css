@@ -48,3 +48,21 @@
   flex: 1;
   overflow-x: auto;
 }
+
+.matches-banner {
+  background-image: url("/src/assets/matches-banner.jpg");
+  min-height: 40dvh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matches-banner p {
+  margin-top: 10rem;
+  font-size: clamp(1.2rem, 2vw, 1.2rem);
+  color: antiquewhite;
+  animation: glitchTop 1s linear infinite;
+}

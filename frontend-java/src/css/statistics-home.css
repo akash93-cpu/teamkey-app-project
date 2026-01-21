@@ -1,0 +1,80 @@
+.stat-page-section-1 {
+    background-image: url("../assets/division-image-1.jpg");
+    min-height: 91dvh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: clamp(1rem, 14vw, 25rem); /* move up/down */
+    padding-left: clamp(2rem, 21vw, 25rem); /* move left/right */
+}
+
+.stat-page-section-1 h3 {
+    font-size: 32px;
+    margin-bottom: 1rem; /* space between h3 and p */
+}
+
+.stat-page-section-1 p {
+    margin-top: 2rem;
+    max-width: 40rem; 
+    letter-spacing: 0.1em;
+    font-size: 1.2rem;
+    line-height: 1.9;   
+}
+
+.stat-page-section-1 button {
+    margin-top: 2rem;
+    transition: 
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-page-section-2 {
+    background-image: url("../assets/division-image-2.jpg");
+    min-height: 85dvh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: clamp(1rem, 14vw, 25rem); /* move up/down */
+    padding-left: clamp(8rem, 70vw, 95rem); /* move left/right */
+
+}
+
+.stat-page-section-2 h3 {
+    font-size: 32px;
+    margin-bottom: 1rem; /* space between h3 and p */
+}
+
+.stat-page-section-2 p {
+    margin-top: 2rem;
+    max-width: 40rem; 
+    letter-spacing: 0.1em;
+    font-size: 1.2rem;
+    line-height: 1.9;   
+}
+
+.stat-page-section-2 button {
+    margin-top: 2rem;
+    transition: 
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-page-section-2 button:hover {
+  background-color: #1565c0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stat-page-section-1 button:hover {
+  background-color: #1565c0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
