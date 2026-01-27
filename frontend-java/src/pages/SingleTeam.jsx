@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import MyPagination from "./Pagination.jsx";
 import { LuLoaderPinwheel } from "react-icons/lu";
 import { checkStatus } from "../../status.js";
+import { Toaster } from "react-hot-toast";
+
 export default function SingleTeamView() {
     const [data, setData] = useState({
         bands: [],
@@ -57,6 +59,8 @@ export default function SingleTeamView() {
     };
 
     return (
+        <>
+        <Toaster />
         <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>
             <div style={{
                 marginBottom: '15px',
@@ -135,5 +139,6 @@ export default function SingleTeamView() {
             )}
 
         </div>
+        </>
     );
 }

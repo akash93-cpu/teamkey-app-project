@@ -26,8 +26,8 @@
 
 .stat-page-section-1 button {
     margin-top: 2rem;
-    transition: 
-    background-color 0.3s ease,
+    background: linear-gradient(90deg,rgba(242, 56, 56, 1) 0%, rgba(179, 191, 48, 1) 100%);
+    transition: background-color 0.3s ease,
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
@@ -43,7 +43,6 @@
     flex-direction: column;
     padding-top: clamp(1rem, 14vw, 25rem); /* move up/down */
     padding-left: clamp(8rem, 70vw, 95rem); /* move left/right */
-
 }
 
 .stat-page-section-2 h3 {
@@ -60,9 +59,9 @@
 }
 
 .stat-page-section-2 button {
+    background: linear-gradient(90deg,rgba(56, 214, 242, 1) 0%, rgba(127, 48, 191, 1) 100%);
     margin-top: 2rem;
-    transition: 
-    background-color 0.3s ease,
+    transition: background-color 0.3s ease,
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }

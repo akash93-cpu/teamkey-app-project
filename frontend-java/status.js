@@ -1,4 +1,6 @@
 // js file to check if server is online
+import toast from "react-hot-toast";
+
 export const checkStatus = async (maxAttempts = 5) => {
     for (let time = 0; time < maxAttempts; time++) {
 
@@ -18,6 +20,6 @@ export const checkStatus = async (maxAttempts = 5) => {
         await new Promise(r => setTimeout(r, 500));
     }
 
-    alert("Server connection timeout!");
+    toast.error("Server connection timeout!");
     return false;
 };

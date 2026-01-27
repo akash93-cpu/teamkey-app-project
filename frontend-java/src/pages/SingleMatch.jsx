@@ -3,6 +3,8 @@ import { Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import MyPagination from "./Pagination.jsx";
 import { checkStatus } from "../../status.js";
+import { Toaster } from "react-hot-toast";
+
 export default function SingleMatchView() {
 
     const [data, setData] = useState({
@@ -58,6 +60,8 @@ export default function SingleMatchView() {
     };
 
     return (
+        <>
+        <Toaster />
         <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>
             <div style={{
                 marginBottom: '15px',
@@ -144,5 +148,6 @@ export default function SingleMatchView() {
                 </>
             )}
         </div>
+        </>
     );
 }

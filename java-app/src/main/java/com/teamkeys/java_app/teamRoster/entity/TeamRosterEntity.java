@@ -1,6 +1,5 @@
 package com.teamkeys.java_app.teamRoster.entity;
 
-
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;

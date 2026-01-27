@@ -5,6 +5,8 @@ import MyPagination from "./Pagination.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { LuLoaderPinwheel } from "react-icons/lu";
 import { checkStatus } from "../../status.js";
+import { Toaster } from "react-hot-toast";
+
 import '../css/team-roster-styles.css';
 
 export default function TeamRosterTable() {
@@ -44,7 +46,7 @@ export default function TeamRosterTable() {
                 if (!response.ok) throw new Error(response.status);
 
                 const result = await response.json();
-                const allTeamNames = [...new Set(result.map(item => item.teamName))]; // returns an array of all matchIds 
+                const allTeamNames = [...new Set(result.map(item => item.teamName))]; // returns an array of all teamNames 
                 console.log(allTeamNames);
                 
                 setData({
@@ -76,6 +78,7 @@ export default function TeamRosterTable() {
 
     return (
         <>
+        <Toaster />
         <div className="teams-roster-main">
 
         <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>

@@ -5,6 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import "../css/table-page.css";
 import MyPagination from "./Pagination.jsx";
 import { checkStatus } from "../../status.js";
+import { Toaster } from "react-hot-toast";
 
 export default function DisplayTable() {
 
@@ -100,6 +101,7 @@ export default function DisplayTable() {
 
     return (
         <>
+        <Toaster />
             <div className="matches-banner">
                 <p>All the matches in one place.</p>
             </div>

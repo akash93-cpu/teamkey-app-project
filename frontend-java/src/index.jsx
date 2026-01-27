@@ -8,6 +8,7 @@ import TeamRosterTable from './pages/TeamRoster.jsx';
 import SingleTeamView from './pages/SingleTeam.jsx';
 import { StatsHomePage } from './pages/StatisticsHome.jsx';
 import Footer from './Footer.jsx';
+import Teams from './pages/TeamView.jsx';
 
 export default function IndexPage() {
 
@@ -24,6 +25,7 @@ export default function IndexPage() {
                 <Route path="/single-match/:id" element={<SingleMatchView />} />
                 <Route path="/team-names/:id" element={<SingleTeamView />} />
                 <Route path='/stats-home' element={<StatsHomePage />}/>
+                <Route path='/all-teams' element={<Teams />}/>
             </Routes>
             <Footer />
         </>

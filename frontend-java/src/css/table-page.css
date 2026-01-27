@@ -9,6 +9,11 @@
   text-align: center;
 }
 
+.custom-table {
+  border-radius: 7px;
+  overflow: hidden; /* important */
+}
+
 .top-heading {
   padding: 0.5rem;
   display: flex;
