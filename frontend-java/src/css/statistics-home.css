@@ -24,14 +24,6 @@
     line-height: 1.9;   
 }
 
-.stat-page-section-1 button {
-    margin-top: 2rem;
-    background: linear-gradient(90deg,rgba(242, 56, 56, 1) 0%, rgba(179, 191, 48, 1) 100%);
-    transition: background-color 0.3s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
 .stat-page-section-2 {
     background-image: url("../assets/division-image-2.jpg");
     min-height: 85dvh;
@@ -58,22 +50,17 @@
     line-height: 1.9;   
 }
 
-.stat-page-section-2 button {
-    background: linear-gradient(90deg,rgba(56, 214, 242, 1) 0%, rgba(127, 48, 191, 1) 100%);
-    margin-top: 2rem;
-    transition: background-color 0.3s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+.stats-gradient-btn {
+  background: linear-gradient(90deg, #38b7f2 0%, #b3bf30 100%);
+  border: none;
+  transition: all 0.2s ease;
 }
 
-.stat-page-section-2 button:hover {
-  background-color: #1565c0;
+.stats-gradient-btn:hover {
+  background: linear-gradient(68deg, #38b7f2 0%, #1938e7 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.stat-page-section-1 button:hover {
-  background-color: #1565c0;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+.stats-gradient-btn:active {
+  transform: translateY(0);
 }

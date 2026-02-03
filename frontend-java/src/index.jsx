@@ -7,6 +7,8 @@ import SingleMatchView from './pages/SingleMatch.jsx';
 import TeamRosterTable from './pages/TeamRoster.jsx';
 import SingleTeamView from './pages/SingleTeam.jsx';
 import { StatsHomePage } from './pages/StatisticsHome.jsx';
+import StsMain from './pages/StatsMain.jsx';
+import SupportPage from './pages/Support.jsx';
 import Footer from './Footer.jsx';
 import Teams from './pages/TeamView.jsx';
 
@@ -25,7 +27,9 @@ export default function IndexPage() {
                 <Route path="/single-match/:id" element={<SingleMatchView />} />
                 <Route path="/team-names/:id" element={<SingleTeamView />} />
                 <Route path='/stats-home' element={<StatsHomePage />}/>
+                <Route path='/sts-main' element={<StsMain />}/>
                 <Route path='/all-teams' element={<Teams />}/>
+                <Route path='/support' element={<SupportPage />} />
             </Routes>
             <Footer />
         </>

@@ -1,9 +1,10 @@
 package com.teamkeys.java_app.statistics.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-import com.teamkeys.java_app.stats.entity.StatsEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.teamkeys.java_app.statistics.entity.StatsEntity;
 
 public interface StatsRepo extends JpaRepository<StatsEntity, Integer> {
-	
+	List<StatsEntity> findByMatchId(int matchId);
 }

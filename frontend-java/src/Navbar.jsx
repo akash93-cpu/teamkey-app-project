@@ -24,7 +24,7 @@ export default function NavigationBar() {
                             <Nav.Link href="/team-roster">Players</Nav.Link>
                             <Nav.Link href='/all-teams'>Teams</Nav.Link>
                             <NavDropdown title="More">
-                                <NavDropdown.Item>Support</NavDropdown.Item>
+                                <NavDropdown.Item href='/support'>Support</NavDropdown.Item>
                                 <NavDropdown.Item>About</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>

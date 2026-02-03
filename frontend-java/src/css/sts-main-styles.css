@@ -1,0 +1,146 @@
+.sts-main {
+  margin-top: 100px;
+}
+
+.match-selection-tabs {
+  display: grid;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.teams-chart {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) 2px minmax(300px, 1fr);
+  align-items: stretch;
+  width: 100%;
+  min-height: 300px;
+}
+
+.teams-divider {
+  background-color: #473636;
+}
+
+.teams-left,
+.teams-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .teams-chart {
+    grid-template-columns: 1fr;
+  }
+
+  .teams-divider {
+    display: none;
+  }
+}
+
+.teams-divider {
+  animation: growLine 0.5s ease-out;
+}
+
+@keyframes growLine {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.chart-wrapper {
+  width: clamp(220px, 40vw, 520px);
+  margin: 0 auto;
+}
+
+.chart-box {
+  position: relative;
+  aspect-ratio: 1 / 1;   /* keeps the chart square */
+  width: 100%;
+}
+
+.chart-main {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  /* keeps it circular */
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-subtext {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 21px;
+  color: #000000;
+}
+
+.chart-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  pointer-events: none;
+
+  font-weight: 600;
+  text-align: center;
+
+  /* 🔥 Responsive scaling */
+  font-size: clamp(12px, 4vw, 24px);
+  line-height: 1.1;
+  max-width: 60%;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.table-teams {
+  display: flex;
+  justify-content: center; /* center tables horizontally */
+  gap: 20px; /* space between tables */
+  align-items: flex-start; /* align tables at the top */
+  flex-wrap: wrap; /* allows stacking on smaller screens */
+}
+
+.home-team-table,
+.away-team-table {
+  flex: 1 1 300px; /* grow/shrink, min width 300px */
+  max-width: 500px; /* optional, prevents them from getting too wide */
+}
+
+.teams-divider {
+  width: 2px;
+  background-color: #473636;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .chart-wrapper {
+    max-width: 280px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .chart-wrapper {
+    max-width: 220px;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .teams-chart {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .teams-divider {
+    display: none;
+  }
+
+  .table-teams {
+    flex-direction: column; /* stack tables on mobile */
+  }
+}
