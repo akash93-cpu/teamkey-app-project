@@ -200,7 +200,7 @@ export default function StsMain() {
                                     </div>
                                 ) : (
                                     <>
-                                    <p style={{ textAlign: 'center' }}>Showing match statistics for match {id}</p>
+                                    <p style={{ textAlign: 'center' }}>Showing match statistics for <strong>Match {id}</strong></p>
                                     <div className="table-teams">
                                         <div className="home-team-table">
                                             <Table striped hover bordered>
