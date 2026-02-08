@@ -184,7 +184,7 @@ export default function StsMain() {
                     </div>
 
                 </div>
-
+                
                 <div className="match-selection-tabs">
                     <Tabs
                         activeKey={eventId}

@@ -12,6 +12,6 @@ public class TeamsService {
 	private final TeamsRepo repo;
 	
 	public List<TeamsEntity> getAll() {
-		return repo.findAll();
+		return repo.findAllTeams();
 	}
 }

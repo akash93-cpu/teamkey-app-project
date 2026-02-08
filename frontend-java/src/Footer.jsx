@@ -18,7 +18,7 @@ export default function Footer() {
                     <h4>Get in Touch</h4>
                     <ul>
                         <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Support</a></li>
+                        <li><a href="/support">Support</a></li>
                         <li><a href="#">Help Center</a></li>
                     </ul>
                 </div>

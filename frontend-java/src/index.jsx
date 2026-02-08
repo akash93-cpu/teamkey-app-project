@@ -10,7 +10,8 @@ import { StatsHomePage } from './pages/StatisticsHome.jsx';
 import StsMain from './pages/StatsMain.jsx';
 import SupportPage from './pages/Support.jsx';
 import Footer from './Footer.jsx';
-import Teams from './pages/TeamView.jsx';
+// import Teams from './pages/TeamView.jsx';
+import TeamStats from './pages/TeamStats.jsx';
 
 export default function IndexPage() {
 
@@ -28,7 +29,8 @@ export default function IndexPage() {
                 <Route path="/team-names/:id" element={<SingleTeamView />} />
                 <Route path='/stats-home' element={<StatsHomePage />}/>
                 <Route path='/sts-main' element={<StsMain />}/>
-                <Route path='/all-teams' element={<Teams />}/>
+                {/* <Route path='/all-teams' element={<Teams />}/> */}
+                <Route path='/teams-stats' element={<TeamStats />}/>
                 <Route path='/support' element={<SupportPage />} />
             </Routes>
             <Footer />

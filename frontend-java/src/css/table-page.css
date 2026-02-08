@@ -1,5 +1,4 @@
-.custom-table th,
-.custom-table td {
+.custom-table th .custom-table td {
   border: 1px solid #ccc;
   padding: 8px;
 }
@@ -14,7 +13,7 @@
   overflow: hidden; /* important */
 }
 
-.top-heading {
+.top-heading-block {
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -23,11 +22,12 @@
   background-color: #23598659;
 }
 
-.top-heading p {
+.top-heading-block p {
   text-align: center;
   margin: 0;
   line-height: 1;
   font-size: medium;
+  color: rgb(255, 255, 255) !important;
 }
 
 .match-filter {
@@ -54,20 +54,20 @@
   overflow-x: auto;
 }
 
-.matches-banner {
-  background-image: url("/src/assets/matches-banner.jpg");
-  min-height: 40dvh;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.main-div-table {
+  background: #22c3c0;
+  background: linear-gradient(0deg,rgba(34, 195, 192, 1) 0%, rgba(48, 46, 51, 1) 100%);
 }
 
-.matches-banner p {
-  margin-top: 10rem;
-  font-size: clamp(1.2rem, 2vw, 1.2rem);
-  color: antiquewhite;
-  animation: glitchTop 1s linear infinite;
+#top-p-tag {
+  margin-top: 50px;
+}
+
+.heading-div {
+  display: flex;
+  align-items: baseline;
+}
+
+.heading-div p {
+  margin-left: auto;
 }

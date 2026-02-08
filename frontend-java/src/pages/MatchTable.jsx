@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import { DropdownButton, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
-import "../css/table-page.css";
 import MyPagination from "./Pagination.jsx";
 import { checkStatus } from "../../status.js";
 import { Toaster } from "react-hot-toast";
+import Badge from 'react-bootstrap/Badge';
+import Stack from 'react-bootstrap/Stack';
+import "../css/table-page.css";
 
 export default function DisplayTable() {
 
@@ -101,15 +103,14 @@ export default function DisplayTable() {
 
     return (
         <>
-        <Toaster />
-            <div className="matches-banner">
-                <p>All the matches in one place.</p>
-            </div>
-            <div style={{ padding: '20px', color: 'whitesmoke', backgroundColor: 'slategray' }}>
+            <Toaster />
+            <div className="main-div-table" style={{ padding: '30px', color: 'whitesmoke' }}>
+                <div className="heading-div">
+                    <h1 id="top-p-tag">All matches</h1>
+                </div>
+                <div className="top-heading-block">
 
-                <div className="top-heading">
-
-                    <p>Japanese B League</p>
+                    <p id="p-tag">Japanese B League</p>
 
                     <div className="match-filter">
                         <label htmlFor="matchIds">Filter</label>
@@ -127,7 +128,7 @@ export default function DisplayTable() {
                         </DropdownButton>
                     </div>
 
-                    <p>2020/2021</p>
+                    <p id="p-tag">2020/2021</p>
 
                 </div>
 

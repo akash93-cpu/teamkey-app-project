@@ -1,0 +1,51 @@
+.breadcrumb-pills {
+  display: flex;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.breadcrumb-pills li {
+  position: relative;          /* anchor for separator */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 4px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+/* custom "/" separator */
+.breadcrumb-pills li:not(:last-child)::after {
+  content: "/";
+  position: absolute;
+  right: -18px;                /* pushes it outside the border */
+  color: #9ca3af;
+}
+
+/* spacing between pills */
+.breadcrumb-pills li:not(:last-child) {
+  margin-right: 24px;
+}
+
+/* remove library separators */
+.breadcrumb-pills li::before {
+  display: none !important;
+}
+
+.breadcrumb-pills li.active {
+  background-color: #f3f4f6;
+  font-weight: 500;
+}
+
+#bread-icons {
+    color: black;
+    margin-bottom: 2px;
+    margin-right: 4px;  
+}
+
+.single-match-div {
+  background: #1b5375;
+  background: linear-gradient(0deg, rgba(27, 83, 117, 1) 0%, rgba(250, 232, 232, 1) 100%);
+}

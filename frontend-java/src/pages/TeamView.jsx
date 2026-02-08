@@ -6,6 +6,7 @@ import '../css/teams-view.css';
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
 
+// not used
 export default function Teams() {
     
     const [data, setData] = useState({ allTeams: [] });

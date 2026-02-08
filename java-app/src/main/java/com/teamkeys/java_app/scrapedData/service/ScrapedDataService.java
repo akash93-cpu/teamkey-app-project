@@ -21,7 +21,8 @@ public class ScrapedDataService {
 	}
 	
     public List<ScrapedDataEntity> getByMatchId(int matchId) {
-        List<ScrapedDataEntity> results = repo.findAllByMatchId(matchId);
+        List<ScrapedDataEntity> results = repo.findAllByMatchIdOrdered(matchId);
+        // List<ScrapedDataEntity> results = repo.findAllByMatchId(matchId); -- replaced
 
         if (results.isEmpty()) {
           throw new NotFoundException("No matches found with match_id " + matchId);

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 0.7rem;
-    background-color: #d9e0e659;
+    background-color: #badce05b;
 }
 
 .top-heading p {
@@ -12,19 +12,17 @@
     margin: 0;
     line-height: 1;
     font-size: medium;
-    color: antiquewhite;
+    color: rgb(0, 0, 0) !important;
 }
 
 .team-filter {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: antiquewhite;
+    color: rgb(0, 0, 0) !important;
 }
 
 .teams-roster-main {
-    background-image: url("/src/assets/players.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    padding: 3rem 0;
+    background: linear-gradient(0deg, rgba(57, 73, 82, 1) 0%, rgba(255, 250, 254, 1) 100%);
 }

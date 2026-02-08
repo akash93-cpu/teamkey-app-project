@@ -1,10 +1,6 @@
 .teams-div {
-    background-image: url("../assets/teams-background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 85dvh;
-    /* better than height */
+background: #2ad8db;
+background: linear-gradient(0deg,rgba(42, 216, 219, 1) 0%, rgba(253, 187, 45, 1) 100%);
 }
 
 .team-cards {
@@ -18,6 +14,7 @@
 }
 
 .team-card {
+    background-color: #c1fd48;
     width: 12rem;
     height: 10rem;
 }
@@ -62,7 +59,7 @@
 .team-card-btn {
     margin-top: auto;
     align-self: flex-end;
-    background: linear-gradient(90deg, rgba(128, 128, 128, 1) 0%, rgba(224, 105, 129, 1) 100%);
+    background: red;
     transition: background-color 0.3s ease,
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -82,9 +79,4 @@
 
 .team-header h4 {
     margin-top: 8rem;
-    color: #c1fd48;
-    background-image: linear-gradient(90deg, rgb(57, 227, 199) 24%, rgb(238, 219, 234) 94%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }

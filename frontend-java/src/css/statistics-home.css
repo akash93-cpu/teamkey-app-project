@@ -51,7 +51,7 @@
 }
 
 .stats-gradient-btn {
-  background: linear-gradient(90deg, #38b7f2 0%, #b3bf30 100%);
+  background: DarkGoldenRod;
   border: none;
   transition: all 0.2s ease;
 }
@@ -62,5 +62,20 @@
 }
 
 .stats-gradient-btn:active {
+  transform: translateY(0);
+}
+
+.stats-gradient-btn-2 {
+  background: blueviolet;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.stats-gradient-btn-2:hover {
+  background: linear-gradient(68deg, #38b7f2 0%, #1938e7 100%);
+  transform: translateY(-2px);
+}
+
+.stats-gradient-btn-2:active {
   transform: translateY(0);
 }

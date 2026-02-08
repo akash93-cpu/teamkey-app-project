@@ -6,7 +6,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { LuLoaderPinwheel } from "react-icons/lu";
 import { checkStatus } from "../../status.js";
 import { Toaster } from "react-hot-toast";
-
 import '../css/team-roster-styles.css';
 
 export default function TeamRosterTable() {
@@ -65,7 +64,6 @@ export default function TeamRosterTable() {
         fetchData();
     }, [page, pageSize]);
 
-
     const handlePageChange = useCallback((p) => {
         setPage(p);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -115,7 +113,7 @@ export default function TeamRosterTable() {
                 padding: '0.5rem'   }}>
 
                 <div>
-                    <label style={{ marginRight: '10px', color: "antiquewhite" }}>Records per page:</label>
+                    <label style={{ marginRight: '10px', color: "black" }}>Records per page:</label>
                     <select 
                         value={pageSize} 
                         onChange={handlePageSizeChange}
@@ -127,14 +125,14 @@ export default function TeamRosterTable() {
                     </select>
                 </div>
 
-                <div style={{ fontSize: '14px', color: 'antiquewhite' }}>
+                <div style={{ fontSize: '14px', color: 'black' }}>
                     Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
                 </div>
 
             </div>
 
             {loading ? (
-                <div style={{ textAlign: 'center', padding: '50px', color: 'antiquewhite' }}><LuLoaderPinwheel size={35} style={{color: 'antiquewhite'}}/>Loading...</div>
+                <div style={{ textAlign: 'center', padding: '50px', color: 'black' }}><LuLoaderPinwheel size={35} />Loading...</div>
             ) : (
                 <>
                     <Table striped bordered hover className="custom-table">

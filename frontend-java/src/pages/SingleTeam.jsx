@@ -5,6 +5,10 @@ import MyPagination from "./Pagination.jsx";
 import { LuLoaderPinwheel } from "react-icons/lu";
 import { checkStatus } from "../../status.js";
 import { Toaster } from "react-hot-toast";
+import { Breadcrumb } from "react-bootstrap";
+import { AiOutlineHome } from "react-icons/ai";
+import { CiViewTable } from "react-icons/ci";
+import { MdOutlineDataset } from "react-icons/md";
 
 export default function SingleTeamView() {
     const [data, setData] = useState({
@@ -61,7 +65,24 @@ export default function SingleTeamView() {
     return (
         <>
         <Toaster />
-        <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>
+        <div style={{ padding: '20px', maxWidth: '75%', marginRight: 'auto', marginLeft: 'auto' }}>
+            <Breadcrumb className="breadcrumb-pills">
+                <Breadcrumb.Item href="/">
+                    <AiOutlineHome id="bread-icons" size={16} />
+                    <span>Home</span>
+                </Breadcrumb.Item>
+
+                <Breadcrumb.Item href="/team-roster">
+                    <CiViewTable id="bread-icons" size={16} />
+                    <span>All teams</span>
+                </Breadcrumb.Item>
+
+                <Breadcrumb.Item active>
+                    <MdOutlineDataset id="bread-icons" size={16} />
+                    <span>{id}</span>
+                </Breadcrumb.Item>
+            </Breadcrumb>
+
             <div style={{
                 marginBottom: '15px',
                 display: 'flex',

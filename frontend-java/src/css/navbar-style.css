@@ -7,7 +7,8 @@
 .custom-navbar {
   background-color: rgba(73, 77, 82, 0.6);
   backdrop-filter: blur(8px);
-  font-weight: 400;
+  font-weight: 250;
+  padding: 16px 0;
 }
 
 .navbar .nav-link {

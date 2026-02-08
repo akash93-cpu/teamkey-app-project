@@ -51,7 +51,7 @@ function App() {
 
           <div className='icon-item'>
             <CiShare2 id='polygon-icon' size={64} />
-            <p>Sharing</p>
+            <p>Connect</p>
           </div>
 
         </div>
@@ -60,7 +60,7 @@ function App() {
       <div className='slider-content'>
         <div className='slider-text'>
           <h1>Statistics, analysis, details and more</h1>
-          <p>As a TeamKeys user you get premium access to highly sensitive data provided through the platform. Browse, edit and view teams and match trends including scores and other forms of
+          <p>As a TeamKeys user you get premium access to highly sensitive data provided through the platform. Browse or edit data and view teams and match trends including scores and other forms of
             metrics.
           </p>
         </div>
@@ -98,7 +98,7 @@ function App() {
               </div>
               <Carousel.Caption className='caption-text'>
                 <h3>Highlights</h3>
-                <p>Detailed player metrics for every match.</p>
+                <p>Detailed team metrics for every match.</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -115,9 +115,7 @@ function App() {
               </div>
               <Carousel.Caption className='caption-text'>
                 <h3>Versatility</h3>
-                <p>
-                  Combined performance throughput for all avenues.
-                </p>
+                <p>Combined performance throughput for all avenues.</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
