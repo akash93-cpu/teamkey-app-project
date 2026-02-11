@@ -44,8 +44,38 @@
     margin-bottom: 2px;
     margin-right: 4px;  
 }
+.actions-count {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  
+  margin-bottom: 5px;
+  width: 100%;
+}
 
 .single-match-div {
   background: #1b5375;
   background: linear-gradient(0deg, rgba(27, 83, 117, 1) 0%, rgba(250, 232, 232, 1) 100%);
+}
+
+.figure-overlay {
+  position: relative;
+  display: inline-block;
+}
+
+.figure-img {
+  border-radius: 0.7rem;
+}
+
+.figure-caption-overlay {
+  position: absolute;
+  top: 0;                /* or top: 0; or center it */
+  left: 0;
+  width: 100%;
+  padding: 0.75rem;
+  color: rgb(0, 0, 0);
+  border-radius: 0 0 0.7rem 0.7rem;
+  font-size: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
 }

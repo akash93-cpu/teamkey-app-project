@@ -80,6 +80,7 @@ export default function TeamRosterTable() {
         <div className="teams-roster-main">
 
         <div style={{ padding: '20px', marginTop: '50px', maxWidth: '85%', marginRight: 'auto', marginLeft: 'auto' }}>
+            <h4>Complete player roster for every team</h4>
             <div className="top-heading">
 
             <p>Japanese B League</p>

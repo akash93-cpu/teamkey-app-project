@@ -1,6 +1,8 @@
 package com.teamkeys.java_app.scrapedData.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ public class ScrapedDataService {
 		return repo.findAll();
 	}
 	
-    public List<ScrapedDataEntity> getByMatchId(int matchId) {
+    public MatchDetailsResponse getByMatchId(int matchId) {
         List<ScrapedDataEntity> results = repo.findAllByMatchIdOrdered(matchId);
         // List<ScrapedDataEntity> results = repo.findAllByMatchId(matchId); -- replaced
 
@@ -28,7 +30,11 @@ public class ScrapedDataService {
           throw new NotFoundException("No matches found with match_id " + matchId);
 //        	System.out.println("No matches found with match_id " + matchId);
         }
-        return results;
+        
+        Map<String, Long> actionCounts = results.stream()
+        		.collect(Collectors.groupingBy(ScrapedDataEntity::getAction,Collectors.counting()));
+        
+        return new MatchDetailsResponse(results, actionCounts);
     }
     
     public List<MatchEvents> getAllEvents() {

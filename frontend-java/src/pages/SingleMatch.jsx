@@ -8,11 +8,15 @@ import { Breadcrumb } from "react-bootstrap";
 import { AiOutlineHome } from "react-icons/ai";
 import { CiViewTable } from "react-icons/ci";
 import { MdOutlineDataset } from "react-icons/md";
+import { Figure } from "react-bootstrap";
 import '../css/single-match-styles.css';
+import img from '../assets/figure-img.jpg'
+
 export default function SingleMatchView() {
 
     const [data, setData] = useState({
-        bands: [],
+        eventsDataEntities: [],
+        actionCounts: {},
         totalPage: 0,
         totalRecords: 0
     })
@@ -37,10 +41,13 @@ export default function SingleMatchView() {
 
                 if (!response.ok) throw new Error(response.status);
                 const result = await response.json();
+                console.log(result);
+                const events = result.eventsDataEntities || [];
                 setData({
-                    bands: result.slice((page - 1) * pageSize, page * pageSize),
-                    totalPage: Math.ceil(result.length / pageSize),
-                    totalRecords: result.length,
+                    eventsDataEntities: events.slice((page - 1) * pageSize, page * pageSize),
+                    actionCounts: result.actionCountsMap || {},
+                    totalPage: Math.ceil(events.length / pageSize),
+                    totalRecords: events.length,
                 })
 
             } catch (error) {
@@ -90,8 +97,7 @@ export default function SingleMatchView() {
                     border: '1px solid black',
                     padding: '5px',
                     borderRadius: '0.7rem',
-                    backgroundColor: '#f3f4f6'
-                }}>
+                    backgroundColor: '#f3f4f6' }}>
                     <div>
                         <label style={{ marginRight: '10px' }}>Records per page:</label>
                         <select
@@ -110,7 +116,31 @@ export default function SingleMatchView() {
                     <div style={{ fontSize: '14px', color: '#666' }}>
                         Showing {((page - 1) * pageSize) + 1} - {Math.min(page * pageSize, data.totalRecords)} of {data.totalRecords} records
                     </div>
+                    
+                </div>
 
+                <p>Action counts by both teams for this match</p>
+                <div className="actions-count">
+                    {Object.keys(data.actionCounts).length > 0 ? (
+                        Object.entries(data.actionCounts)
+                            .filter(([action]) => ['ASSIST', 'DEFENSIVE_REBOUND', 'OFFENSIVE_REBOUND', 'PERSONAL_FOUL',
+                                'PERSONAL_FOUL_RECEIVED', 'STEAL', 'TURNOVER',
+                            ].includes(action))
+                            .map(([action, count], index) => (
+                                <Figure key={index} className="figure-overlay">
+                                    <Figure.Image
+                                        width={170}
+                                        height={5}
+                                        src={img}
+                                    />
+                                    <Figure.Caption className="figure-caption-overlay">
+                                        {action}: {count} counts
+                                    </Figure.Caption>
+                                </Figure>
+                            ))
+                    ) : (
+                        <p>No data!</p>
+                    )}
                 </div>
 
                 {loading ? (
@@ -118,6 +148,7 @@ export default function SingleMatchView() {
                 ) : (
 
                     <>
+
                         <Table striped bordered hover className="custom-table">
 
                             <thead>
@@ -135,8 +166,8 @@ export default function SingleMatchView() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.bands.length > 0 ? (
-                                    data.bands.map((band, index) => (
+                                {data.eventsDataEntities.length > 0 ? (
+                                    data.eventsDataEntities.map((band, index) => (
                                         <tr key={index}>
                                             <td>{(page - 1) * pageSize + (index + 1)}</td>
                                             <td>{band.id}</td>

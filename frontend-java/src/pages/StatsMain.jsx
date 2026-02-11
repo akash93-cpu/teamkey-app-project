@@ -2,13 +2,10 @@ import { useState, useEffect } from "react";
 import Tabs from 'react-bootstrap/Tabs';
 import { Toaster } from "react-hot-toast";
 import Tab from 'react-bootstrap/Tab';
-import {
-    Chart as ChartJS,
-    ArcElement,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Table } from "react-bootstrap";
+import { Chart as ChartJS,
+    ArcElement, Tooltip, Legend } from 'chart.js';
+import { ListGroup, Table } from "react-bootstrap";
+import Card from 'react-bootstrap/Card';
 import { Doughnut } from "react-chartjs-2";
 import '../css/sts-main-styles.css';
 import { checkStatus } from "../../status";
@@ -143,44 +140,57 @@ export default function StsMain() {
         <>
             <Toaster />
             <div className="sts-main">
+                    <h4>Statistics for every match</h4>
                 <div className="teams-chart">
-
                     <div className="teams-left">
-                        <div className="chart-wrapper">
-                            <div className="chart-box">
-                                <h2 className="chart-center-text">{dataA.teamName}</h2>
+                        <Card>
+                            <div className="chart-wrapper">
+                                <div className="chart-box">
+                                    <h2 className="chart-center-text">{dataA.teamName}</h2>
 
-                                <Doughnut
-                                    className="chart-main"
-                                    data={dataChartA}
-                                    options={options}
-                                />
-                            </div>
+                                    <Doughnut
+                                        className="chart-main"
+                                        data={dataChartA}
+                                        options={options}
+                                    />
+                                </div>
 
-                            <div className="chart-subtext">
-                                {dataA.totalTeamPts} points
+                                <div className="chart-subtext">
+                                    <ListGroup>
+                                        <ListGroup.Item active style={{ backgroundColor: 'LightSlateGray' }}>
+                                            {dataA.totalTeamPts} points
+                                        </ListGroup.Item>
+                                    </ListGroup>
+                                </div>
                             </div>
-                        </div>
+                        </Card>
                     </div>
 
                     <div className="teams-divider" />
 
                     <div className="teams-right">
-                        <div className="chart-wrapper">
-                            <div className="chart-box">
-                                <h2 className="chart-center-text">{dataB.teamName}</h2>
+                        <Card>
+                            <div className="chart-wrapper">
+                                <div className="chart-box">
+                                    <h2 className="chart-center-text">{dataB.teamName}</h2>
 
-                                <Doughnut
-                                    className="chart-main"
-                                    data={dataChartB}
-                                    options={options}
-                                />
-                            </div>
+                                    <Doughnut
+                                        className="chart-main"
+                                        data={dataChartB}
+                                        options={options}
+                                    />
+                                </div>
 
-                            <div className="chart-subtext">
-                                {dataB.totalTeamPts} points
+                                <div className="chart-subtext">
+                                    <ListGroup>
+                                        <ListGroup.Item active style={{ backgroundColor: 'LightSeaGreen' }}>
+
+                                            {dataB.totalTeamPts} points
+                                        </ListGroup.Item>
+                                    </ListGroup>
+                                </div>
                             </div>
-                        </div>
+                        </Card>
                     </div>
 
                 </div>

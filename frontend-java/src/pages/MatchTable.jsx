@@ -162,7 +162,7 @@ export default function DisplayTable() {
                 </div>
                 <div className="table-section">
                     <div className="sidebar">
-                        <hr />
+                        <p></p>
                         <p>Total PBP events: {data.totalRecords}</p>
                         <hr />
                         <p>PBP events per match</p>

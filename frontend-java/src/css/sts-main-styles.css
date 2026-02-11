@@ -2,6 +2,11 @@
   margin-top: 100px;
 }
 
+.sts-main h4 {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
 .match-selection-tabs {
   display: grid;
   justify-content: center;

@@ -5,10 +5,11 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
 
-import io.lettuce.core.dynamic.annotation.Param;
+//import io.lettuce.core.dynamic.annotation.Param;
 
 public interface ScrapedDataRepo extends JpaRepository<ScrapedDataEntity, UUID> {
 	

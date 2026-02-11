@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
 import com.teamkeys.java_app.scrapedData.repo.MatchEvents;
+import com.teamkeys.java_app.scrapedData.service.MatchDetailsResponse;
 import com.teamkeys.java_app.scrapedData.service.ScrapedDataService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class ScrapedDataController {
 	
 	@CrossOrigin(origins="http://localhost:5173")
 	@GetMapping("/matches/{matchId}")
-	public List<ScrapedDataEntity> getMatches(@PathVariable int matchId) {
+	public MatchDetailsResponse getMatches(@PathVariable int matchId) {
 		return service.getByMatchId(matchId);
 	}
 	

@@ -9,6 +9,7 @@ import SingleTeamView from './pages/SingleTeam.jsx';
 import { StatsHomePage } from './pages/StatisticsHome.jsx';
 import StsMain from './pages/StatsMain.jsx';
 import SupportPage from './pages/Support.jsx';
+import About from './pages/About.jsx';
 import Footer from './Footer.jsx';
 // import Teams from './pages/TeamView.jsx';
 import TeamStats from './pages/TeamStats.jsx';
@@ -32,6 +33,7 @@ export default function IndexPage() {
                 {/* <Route path='/all-teams' element={<Teams />}/> */}
                 <Route path='/teams-stats' element={<TeamStats />}/>
                 <Route path='/support' element={<SupportPage />} />
+                <Route path='/about-us' element={<About />}/>
             </Routes>
             <Footer />
         </>
