@@ -11,6 +11,7 @@ import StsMain from './pages/StatsMain.jsx';
 import SupportPage from './pages/Support.jsx';
 import About from './pages/About.jsx';
 import Footer from './Footer.jsx';
+import UserDashboard from './pages/Dashboard.jsx';
 // import Teams from './pages/TeamView.jsx';
 import TeamStats from './pages/TeamStats.jsx';
 
@@ -24,6 +25,7 @@ export default function IndexPage() {
             <NavigationBar />
             <Routes>
                 <Route path="/" element={<App />} /> 
+                <Route path='/user' element={<UserDashboard />}/>
                 <Route path="/table" element={<DisplayTable />} />
                 <Route path="/team-roster" element={<TeamRosterTable />} />
                 <Route path="/single-match/:id" element={<SingleMatchView />} />

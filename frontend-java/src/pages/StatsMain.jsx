@@ -258,6 +258,30 @@ export default function StsMain() {
                                                         <td>{dataA.freeThrowEfficiency} %</td>
                                                     </tr>
                                                     <tr>
+                                                        <td>3 Point Attempt Rate</td>
+                                                        <td>{dataA["3PtAttemptRate"]} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2 Point Attempt Rate</td>
+                                                        <td>{dataA["2PtAttemptRate"]} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>True Shooting Percentage</td>
+                                                        <td>{dataA.trueShootingPercentage}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Points Per Shot Attempt</td>
+                                                        <td>{dataA.pointsPerShotAttempt}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Free Throw Rate</td>
+                                                        <td>{dataA.freeThrowRate}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Shot Distribution Ratio</td>
+                                                        <td>{dataA.shotDistributionRatio}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td>Overtime</td>
                                                         <td>{dataA.overTime ? "Yes" : "No"}</td>
                                                     </tr>
@@ -311,6 +335,30 @@ export default function StsMain() {
                                                     <tr>
                                                         <td>Free Throw Efficiency</td>
                                                         <td>{dataB.freeThrowEfficiency} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3 Point Attempt Rate</td>
+                                                        <td>{dataB["3PtAttemptRate"]} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2 Point Attempt Rate</td>
+                                                        <td>{dataB["2PtAttemptRate"]} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>True Shooting Percentage</td>
+                                                        <td>{dataB.trueShootingPercentage}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Points Per Shot Attempt</td>
+                                                        <td>{dataB.pointsPerShotAttempt}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Free Throw Rate</td>
+                                                        <td>{dataB.freeThrowRate}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Shot Distribution Ratio</td>
+                                                        <td>{dataB.shotDistributionRatio}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Overtime</td>

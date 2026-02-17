@@ -33,4 +33,9 @@ public class StatsController {
 		return service.getStatsByMatchId(matchId);
 	}
 	
+	@GetMapping("/team-stats-all/{teamId}")
+	public List<StatsEntity> getStatsByTeamId(@PathVariable int teamId) {
+		return service.getStatsByTeamId(teamId);
+	}
+	
 }

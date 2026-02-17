@@ -53,7 +53,7 @@ public class StatsEntity {
 	
 	@Transient
 	public int getTotal3PtsAttempts() {
-		return total3PtsMade + total2PtsMade;
+		return total3PtsMade + total3PtsMissed;
 	}
 	
 	@Transient
@@ -94,7 +94,56 @@ public class StatsEntity {
 	public double getFreeThrowEfficiency() {
 		int attempts = getTotalFreeThrowAttempts();
 		if (attempts == 0) return 0.0;
+		
 		return Math.round((totalFreeThrowsMade * 100.0 / attempts) * 100.0) / 100.0;
+	}
+	
+	@Transient
+	public double get3PtAttemptRate() {
+	    int total = getTotalFieldGoalsAttempts();
+	    if (total == 0) return 0.0;
+
+	    double rate = ((double) getTotal3PtsAttempts() / total) * 100;
+	    return Math.round(rate * 100.0) / 100.0;
+	}
+	
+	@Transient
+	public double get2PtAttemptRate() {
+		int total = getTotalFieldGoalsAttempts();
+		if (total == 0) return 0.0;
+		
+		double rate = ((double) getTotal2PtsAttempts() / total) * 100;
+		return Math.round(rate * 100.0) / 100.0;
+	}
+	
+	@Transient
+	public double getTrueShootingPercentage() {
+	    int fga = getTotalFieldGoalsAttempts();
+	    int fta = getTotalFreeThrowAttempts();
+	    int pts = getTotalTeamPts();
+	    if (fga == 0 && fta == 0) return 0.0;
+
+	    double ts = pts / (2.0 * (fga + 0.44 * fta)) * 100.0;  
+
+	    return Math.round(ts * 100.0) / 100.0;
+	}
+	
+	@Transient
+	public double getPointsPerShotAttempt() {
+	    double value = (double) getTotalTeamPts() / getTotalFieldGoalsAttempts();
+	    return Math.round(value * 100.0) / 100.0;
+	}
+	
+	@Transient
+	public double getFreeThrowRate() {
+		double value = (double) getTotalFreeThrowAttempts() / getTotalFieldGoalsAttempts();
+		return Math.round(value * 100.0) / 100.0;
+	}
+	
+	@Transient
+	public double getShotDistributionRatio() {
+		double value = (double) getTotal3PtsAttempts() / getTotal2PtsAttempts();
+		return Math.round(value * 100.0) / 100.0;
 	}
 	
 }

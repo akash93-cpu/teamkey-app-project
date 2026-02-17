@@ -29,4 +29,13 @@ public class StatsService {
           return resultSet;
 	}
 	
+	public List<StatsEntity> getStatsByTeamId(int teamId) {
+		List<StatsEntity> resultSetEntities = repo.findByTeamId(teamId);
+		
+		if (resultSetEntities.isEmpty()) {
+			throw new NotFoundException("No teams found for team_id " + teamId);
+		}
+		return resultSetEntities;
+	}
+	
 }

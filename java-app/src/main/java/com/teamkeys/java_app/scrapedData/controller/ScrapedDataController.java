@@ -13,6 +13,7 @@ import com.teamkeys.java_app.scrapedData.repo.MatchEvents;
 import com.teamkeys.java_app.scrapedData.service.MatchDetailsResponse;
 import com.teamkeys.java_app.scrapedData.service.ScrapedDataService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(allowedHeaders="Content-Type")
@@ -23,6 +24,7 @@ public class ScrapedDataController {
 	
 	private final ScrapedDataService service;
 	
+	@Hidden
 	@CrossOrigin(origins="http://localhost:5173")
 	@GetMapping
 	public List<ScrapedDataEntity> getAllRecords(){
