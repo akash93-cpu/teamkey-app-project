@@ -18,5 +18,5 @@ public class HelloController {
     public ResponseEntity<String> status() {
     	return ResponseEntity.ok("OK");
     }
-
+   
 }

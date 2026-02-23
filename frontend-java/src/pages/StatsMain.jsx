@@ -140,7 +140,7 @@ export default function StsMain() {
         <>
             <Toaster />
             <div className="sts-main">
-                    <h4>Statistics for every match</h4>
+                    <h4>Box Score Statistics</h4>
                 <div className="teams-chart">
                     <div className="teams-left">
                         <Card>
