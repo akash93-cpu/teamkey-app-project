@@ -20,7 +20,7 @@ export default function NavigationBar() {
                         <Nav className="mx-auto gap-4">
                             <Nav.Link href="/table">Matches</Nav.Link>
                             <Nav.Link href='/stats-home'>Statistics</Nav.Link>
-                            <Nav.Link>Trends</Nav.Link>
+                            <Nav.Link href='/trends'>Trends</Nav.Link>
                             <Nav.Link href="/team-roster">Players</Nav.Link>
                             <Nav.Link href='/teams-stats'>Teams</Nav.Link>
                             <NavDropdown title="More">

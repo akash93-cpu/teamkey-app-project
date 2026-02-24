@@ -1,0 +1,24 @@
+.trends-main {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.trends-main h4 {
+    padding-bottom: 2rem;
+}
+
+.trends-main p {
+    padding-bottom: 2rem;
+}
+
+.scoped-charts {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+    width: 60%;           /* Adjust this to make it narrower */
+    margin: 0 auto;       /* Centers the div horizontally */
+}
+
+.line-main {
+    width: 100% !important; /* Make the chart fill the container */
+    max-width: 100%;        /* Prevent overflow */
+}

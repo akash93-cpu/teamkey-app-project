@@ -20,7 +20,7 @@ function App() {
         <div className='hero-parent'>
 
           <div className='hero-heading'>
-            <p>Tomorrow's Data Todaysss</p>
+            <p>Tomorrow's Data Today</p>
           </div>
 
           <div className='hero-content'>

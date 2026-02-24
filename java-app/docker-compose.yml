@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:16
-    container_name: postgres-db
-    environment:
-      POSTGRES_DB: basketball
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+#  postgres:
+#    image: postgres:16
+#    container_name: postgres-db
+#    environment:
+#      POSTGRES_DB: basketball
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: password
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
 
   app:
     build:
@@ -24,9 +24,9 @@ services:
       - .:/java-app
       - ~/.m2:/root/.m2
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/basketball
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
 
   frontend:
     build:
