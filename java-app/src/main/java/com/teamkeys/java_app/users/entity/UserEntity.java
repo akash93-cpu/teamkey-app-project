@@ -29,6 +29,6 @@ public class UserEntity {
 	private String password;
 	
 	@Column(name = "phone")
-	private int phoneNumber;
+	private long phoneNumber;
 	
 }

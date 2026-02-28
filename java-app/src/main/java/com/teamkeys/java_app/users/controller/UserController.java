@@ -20,7 +20,7 @@ public class UserController {
 	
 	private final UserService service;
 	
-	@PostMapping("create-user")
+	@PostMapping("/create-user")
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserDataTransferObject createUser(@Valid @RequestBody UserDataTransferObject userDataTransferObject) throws NoSuchAlgorithmException {
 		
