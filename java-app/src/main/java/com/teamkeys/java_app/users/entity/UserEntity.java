@@ -16,17 +16,19 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
 	
 	@Id
+	@Column(name = "user_id")
 	private int userId;
 	
 	@Column(name = "email")
-	private String emailString;
+	private String email;
 	
 	@Column(name = "username")
-	private String userNameString;
+	private String userName;
 	
 	@Column(name = "password")
-	private String passwordString;
+	private String password;
 	
 	@Column(name = "phone")
 	private int phoneNumber;
+	
 }

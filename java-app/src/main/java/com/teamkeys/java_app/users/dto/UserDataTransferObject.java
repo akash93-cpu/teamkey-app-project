@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor	
-public class UserDataTransferObejct {
+public class UserDataTransferObject {
 	
 	private int userId;
-	private String emailString;
-	private String userNameString;
-	private String passwordString;
-	private int phoneNumber; 
+	private String email;
+	private String userName;
+	private String password;
+	private int phoneNumber;
 	
 }
