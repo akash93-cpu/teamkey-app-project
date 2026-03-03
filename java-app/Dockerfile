@@ -16,6 +16,8 @@ WORKDIR /app
 
 COPY --from=builder /app/target/java-app-0.0.1-SNAPSHOT.jar app.jar
 
+RUN apt-get update && apt-get install -y ca-certificates && update-ca-certificates
+
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

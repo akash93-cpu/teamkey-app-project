@@ -31,4 +31,7 @@ public class UserEntity {
 	@Column(name = "phone")
 	private long phoneNumber;
 	
+	@Column(name = "active")
+	private boolean active = false;
+	
 }

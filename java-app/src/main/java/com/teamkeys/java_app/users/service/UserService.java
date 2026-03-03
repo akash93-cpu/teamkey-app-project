@@ -1,6 +1,8 @@
 package com.teamkeys.java_app.users.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.teamkeys.java_app.exceptions.NotFoundException;
 import com.teamkeys.java_app.exceptions.BadRequestException;
 import com.teamkeys.java_app.users.dto.UserDataTransferObject;
+import com.teamkeys.java_app.users.entity.TokenEntity;
 import com.teamkeys.java_app.users.entity.UserEntity;
 import com.teamkeys.java_app.users.repo.UserRepository;
 
@@ -16,15 +19,16 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.var;
 
 @AllArgsConstructor
 @Service
 public class UserService {
-		
+
 	private final UserRepository repository;
 	private final ModelMapper mapper;
-	
+	private final TokenService tokenService;
+	private final EmailService emailService;
+
 	private UserDataTransferObject convertToData(UserEntity entity) {
 		return mapper.map(entity, UserDataTransferObject.class);
 	}
@@ -33,7 +37,6 @@ public class UserService {
 		return mapper.map(convertToData, UserEntity.class);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public UserDataTransferObject createUser(UserDataTransferObject userDto, String password) throws NoSuchAlgorithmException {
 		
 		if (password == null || password.isBlank()) throw new IllegalArgumentException("Password required!");
@@ -52,7 +55,44 @@ public class UserService {
 		user.setPassword(passwordHash);
 		
 		repository.save(user);
+		
+		// token and email verification here
+		
+		String token = UUID.randomUUID().toString();
+		TokenEntity confirmToken = new TokenEntity(
+				token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
+		tokenService.save(confirmToken);
+		emailService.sendSimpleEmail(userDto.getEmail(), token);
+		System.out.println(token);
+		
 		return convertToData(user);
+	}
+	
+	public void enableUser(UserEntity userEntity) {
+		userEntity.setActive(true);
+		repository.save(userEntity);
+	}
+	
+	@Transactional
+	public void confirmToken(String token) {
+		TokenEntity confirmToken = tokenService.findByToken(token)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid Token!"));
+		
+		if(confirmToken.getConfirmedAt() != null) {
+			throw new IllegalStateException("User already confirmed!");
+		}
+		
+		LocalDateTime expiresAt = confirmToken.getExpiresAt();
+		
+		if(expiresAt.isBefore(LocalDateTime.now())) {
+			throw new IllegalStateException("Token expired!");
+		}
+		
+		confirmToken.setConfirmedAt(LocalDateTime.now());
+		tokenService.save(confirmToken);
+		
+		enableUser(confirmToken.getUser());
+		
 	}
 	
 	@Transactional
@@ -67,7 +107,6 @@ public class UserService {
 				);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void updateUser(String email, UserDataTransferObject userDto, String password, long phoneNumber) 
 			throws NoSuchAlgorithmException {
 		
