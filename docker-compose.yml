@@ -15,13 +15,13 @@ services:
 
   app:
     build:
-      context: .
+      context: ./java-app
       dockerfile: Dockerfile.dev
     container_name: java-app
     ports:
       - "8080:8080"
     volumes:
-      - .:/java-app
+      - ./java-app:/java-app
       - ~/.m2:/root/.m2
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
@@ -32,13 +32,13 @@ services:
 
   frontend:
     build:
-      context: ../frontend-java
+      context: ./frontend-java
       dockerfile: Dockerfile
     container_name: react-app
     ports:
       - "5173:5173"
     volumes:
-      - ../frontend-java:/frontend-java       # match WORKDIR in Dockerfile
+      - ./frontend-java:/frontend-java       # match WORKDIR in Dockerfile
       - /frontend-java/node_modules          # preserve container node_modules
     environment:
       - VITE_API_URL=http://localhost:8080

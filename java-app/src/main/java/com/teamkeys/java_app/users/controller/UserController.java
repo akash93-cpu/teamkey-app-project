@@ -2,6 +2,7 @@ package com.teamkeys.java_app.users.controller;
 
 import java.security.NoSuchAlgorithmException;
 
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,16 +32,31 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserDataTransferObject createUser(@Valid @RequestBody UserDataTransferObject userDataTransferObject) 
 			throws NoSuchAlgorithmException {
-		
 		return service.createUser(userDataTransferObject, userDataTransferObject.getPassword());
 	}
 	
 	@DeleteMapping("/delete-user/{email}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUserByEmail(@PathVariable("email") String email) {
-		
 		service.removeUserByEmail(email);
-		
+	}
+	
+	@PostMapping("/password-reset/{email}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<String> sendToken(@PathVariable("email") String email) 
+	        throws NoSuchAlgorithmException {
+	    service.sendResetToken(email);
+	    return ResponseEntity.ok("Password reset email sent!");
+	}
+	
+	@PutMapping("/reset-password")
+	public ResponseEntity<String> resetUserPassword(
+	        @RequestParam("token") String token,
+	        @RequestParam("email") String email,
+	        @RequestParam("password") String password) 
+	        throws NoSuchAlgorithmException {
+	    service.resetUserPassword(token, email, password);
+	    return ResponseEntity.ok("Password reset for user " + email + " successful!");
 	}
 	
 //	@PutMapping("/update-user/{email}")
@@ -60,7 +76,6 @@ public class UserController {
 	    service.updateUser(
 	        email,
 	        userDataTransferObject,
-	        userDataTransferObject.getPassword(),
 	        userDataTransferObject.getPhoneNumber()
 	    );
 	    return ResponseEntity.ok().build();
@@ -68,7 +83,7 @@ public class UserController {
 	
 	@GetMapping("/confirm-token")
 	public ResponseEntity<String> confirmToken(@RequestParam("token") String token) {
-	    service.confirmToken(token);
+	    service.confirmUser(token);
 	    return ResponseEntity.ok("Token confirmed successfully! Your account is now activated!");
 	}
 	

@@ -19,6 +19,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import lombok.AllArgsConstructor;
+import lombok.experimental.var;
 
 @AllArgsConstructor
 @Service
@@ -39,6 +40,8 @@ public class UserService {
 	
 	public UserDataTransferObject createUser(UserDataTransferObject userDto, String password) throws NoSuchAlgorithmException {
 		
+		// this method will create the user in the system but will not enable the user
+		
 		if (password == null || password.isBlank()) throw new IllegalArgumentException("Password required!");
 		
 		String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -55,15 +58,13 @@ public class UserService {
 		user.setPassword(passwordHash);
 		
 		repository.save(user);
-		
-		// token and email verification here
-		
-		String token = UUID.randomUUID().toString();
+				
+		String token = UUID.randomUUID().toString(); // token and email verification here
 		TokenEntity confirmToken = new TokenEntity(
 				token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
 		tokenService.save(confirmToken);
 		emailService.sendSimpleEmail(userDto.getEmail(), token);
-		System.out.println(token);
+//		System.out.println(token);
 		
 		return convertToData(user);
 	}
@@ -73,8 +74,50 @@ public class UserService {
 		repository.save(userEntity);
 	}
 	
+	public void sendResetToken(String email) throws NoSuchAlgorithmException {
+	    UserEntity user = findOrThrow(email); // to verify that user exists
+	    String tokenString = UUID.randomUUID().toString();
+	    TokenEntity resetToken = new TokenEntity(
+	            tokenString,
+	            LocalDateTime.now(),
+	            LocalDateTime.now().plusMinutes(15),
+	            user); 
+	    tokenService.save(resetToken);
+	    emailService.sendResetEmail(email, tokenString);
+	}
+	
+	public void resetUserPassword(String token, String email, String password) 
+	        throws NoSuchAlgorithmException {
+	    UserEntity user = findOrThrow(email);
+
+	    TokenEntity confirmToken = tokenService.findByToken(token)
+	            .orElseThrow(() -> new IllegalArgumentException("Invalid Token!"));
+
+	    if (confirmToken.getConfirmedAt() != null) {
+	        throw new IllegalStateException("Token already used!");
+	    }
+
+	    if (confirmToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+	        throw new IllegalStateException("Token expired!");
+	    }
+
+	    // Ensure the token belongs to the user making the request
+	    if (!confirmToken.getUser().getEmail().equals(email)) {
+	        throw new IllegalArgumentException("Token does not match the provided email!");
+	    }
+
+	    confirmToken.setConfirmedAt(LocalDateTime.now());
+	    tokenService.save(confirmToken);
+
+	    if (password != null && !password.isBlank()) {
+	        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+	    }
+
+	    repository.save(user);
+	}
+	
 	@Transactional
-	public void confirmToken(String token) {
+	public void confirmUser(String token) { 
 		TokenEntity confirmToken = tokenService.findByToken(token)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid Token!"));
 		
@@ -94,7 +137,7 @@ public class UserService {
 		enableUser(confirmToken.getUser());
 		
 	}
-	
+		
 	@Transactional
 	public void removeUserByEmail(String email) {
 		findOrThrow(email);
@@ -107,7 +150,7 @@ public class UserService {
 				);
 	}
 	
-	public void updateUser(String email, UserDataTransferObject userDto, String password, long phoneNumber) 
+	public void updateUser(String email, UserDataTransferObject userDto, long phoneNumber) 
 			throws NoSuchAlgorithmException {
 		
 		var user = findOrThrow(email);
@@ -115,12 +158,7 @@ public class UserService {
 		
 		user.setUserName(userParam.getUserName());
 		user.setPhoneNumber(phoneNumber);
-		
-		if (!password.isBlank()) {
-			String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-			user.setPassword(passwordHash);
-		}
-		
+				
 		repository.save(user);
 	}
 	

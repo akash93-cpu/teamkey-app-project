@@ -16,7 +16,7 @@ public class UserDataTransferObject {
 	private int userId;
 	
     @NotBlank(message = "Email cannot be empty!")
-//    @TeamKeysEmailClass
+//    @TeamKeysEmailClass // not used for development or testing, only in production
 	private String email;
     
     @NotBlank(message = "Username cannot be empty!")

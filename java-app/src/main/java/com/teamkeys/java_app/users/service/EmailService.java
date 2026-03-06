@@ -40,4 +40,31 @@ public class EmailService {
 		}
 	}
 	
+	@Async
+	public void sendResetEmail(String to, String token) {
+		try {
+			SimpleMailMessage message = new SimpleMailMessage();
+			
+			message.setTo(to);
+			message.setFrom("akash.sonlall99@gmail.com");
+			message.setSubject("Reset your password - Teamkeys");
+			
+            String body = """
+
+                    Hello from Java Spring Team!
+                    You have requested to reset your password:
+
+                    http://localhost:8080/reset-password?token=%s
+                    
+                    Please note -> You have 15 minutes to change your password once you get this email.
+                    """.formatted(token);
+			message.setText(body);
+			mailSender.send(message);
+			  
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new IllegalIdentifierException("Cannot send email!");
+		}
+	}
+	
 }
