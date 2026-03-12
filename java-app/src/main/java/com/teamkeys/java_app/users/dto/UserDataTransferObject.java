@@ -1,4 +1,7 @@
 package com.teamkeys.java_app.users.dto;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor	
 public class UserDataTransferObject {
-	
-	private int userId;
+		
+//	private int userId; not used for this dto
 	
     @NotBlank(message = "Email cannot be empty!")
 //    @TeamKeysEmailClass // not used for development or testing, only in production

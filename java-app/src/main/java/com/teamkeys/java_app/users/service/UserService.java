@@ -19,7 +19,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.var;
 
 @AllArgsConstructor
 @Service
@@ -36,6 +35,10 @@ public class UserService {
 	
 	private UserEntity convertToEntity(UserDataTransferObject convertToData) {
 		return mapper.map(convertToData, UserEntity.class);
+	}
+	
+	public UserEntity findAnyByEmail(String email) {
+		return repository.findUserByEmail(email);
 	}
 	
 	public UserDataTransferObject createUser(UserDataTransferObject userDto, String password) throws NoSuchAlgorithmException {

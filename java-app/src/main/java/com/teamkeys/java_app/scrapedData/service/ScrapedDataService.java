@@ -2,6 +2,7 @@ package com.teamkeys.java_app.scrapedData.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class ScrapedDataService {
 	
 	public List<ScrapedDataEntity> getAll() {
 		return repo.findAll();
+	}
+	
+	public ScrapedDataEntity findScrapedDataEntity(UUID id) {
+		return findOrThrow(id);
 	}
 	
     public MatchDetailsResponse getByMatchId(int matchId) {
@@ -43,5 +48,14 @@ public class ScrapedDataService {
     	
     	if (resultsEvents.isEmpty()) throw new NotFoundException("No values found");
     	return resultsEvents;
-    }	
+    }
+    
+    public void updateScrapedDataEntry(UUID id, ScrapedDataEntity scrapedEntity) {
+    	findOrThrow(id);
+    }
+    
+    private ScrapedDataEntity findOrThrow(final UUID id) {
+    	return repo.findById(id).orElseThrow(() -> new NotFoundException("Match id with id" + id + "not found"));
+    }
+    
 }
