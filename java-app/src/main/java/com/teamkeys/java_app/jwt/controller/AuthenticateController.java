@@ -36,8 +36,14 @@ class AuthenticateController {
 			throw new Exception("Incorrect Username or Password!", e);
 		}
 		
+		try {
+			user = detailsService.checkAccountState(req.getEmail());
+		} catch (BadCredentialsException e) {
+			throw new Exception("Account not yet active! Please verify your account!", e);
+		}
+		
 		var userDetails = detailsService.loadUserByUsername(user.getEmail());
-		System.out.println(userDetails);
+//		System.out.println(userDetails);
 		var jwt = jwtUtil.generateToken(userDetails);
 		
 		Cookie cookie = new Cookie("jwt", jwt);

@@ -52,8 +52,17 @@ public class ApplicationUserDetailsService implements UserDetailsService{
 	    var verified = verifyPasswordHash(password, userEntity.getPassword());
 	    if (!verified) 
 	        throw new BadCredentialsException("Unauthorized");
-
+	    
 	    return userEntity;
+	}
+	
+	public UserEntity checkAccountState(String email) throws NoSuchAlgorithmException {
+		var userEntity = userService.findAnyByEmail(email);
+		
+		if(!userEntity.isActive())
+	    	throw new BadCredentialsException("User is not yet verified! Please verify your account!");
+		
+		return userEntity;
 	}
 
 }

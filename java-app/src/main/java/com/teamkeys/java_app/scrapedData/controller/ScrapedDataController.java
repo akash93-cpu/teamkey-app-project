@@ -1,10 +1,10 @@
 package com.teamkeys.java_app.scrapedData.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.teamkeys.java_app.scrapedData.dto.ScrapedDataDto;
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
@@ -32,17 +31,12 @@ import lombok.RequiredArgsConstructor;
 public class ScrapedDataController {
 	
 	private final ScrapedDataService service;
-	private final ModelMapper mapper;
-	
-	private ScrapedDataEntity convertToEntity(ScrapedDataDto dto) {
-		return mapper.map(dto, ScrapedDataEntity.class);
-	}
 	
 	@Hidden
 	@CrossOrigin(origins="http://localhost:5173", allowCredentials = "true")
 	@GetMapping
 	@PreAuthorize("isAuthenticated()")
-	public List<ScrapedDataEntity> getAllRecords(){
+	public List<ScrapedDataEntity> getAllRecords() {
 		return service.getAll();
 	}
 	
@@ -59,10 +53,11 @@ public class ScrapedDataController {
 		return service.getByMatchId(matchId);
 	}
 	
-	@PutMapping("/{id}")
-	public void putData(@PathVariable("id") UUID id, @Valid @RequestBody ScrapedDataDto dto) {
-		if (!id.equals(dto.getId())) throw new ResponseStatusException (HttpStatus.BAD_REQUEST, "id does not match");
-		service.updateScrapedDataEntry(id, convertToEntity(dto));
+	@PutMapping("/update-entry/{id}")
+	@PreAuthorize("isAuthenticated()")
+	public ResponseEntity<Void> updateEntry(@PathVariable("id") UUID id, @Valid @RequestBody ScrapedDataDto dto) throws NoSuchAlgorithmException {
+		service.updateScrapedData(dto, id);
+		return ResponseEntity.ok().build();
 	}
 	
 }

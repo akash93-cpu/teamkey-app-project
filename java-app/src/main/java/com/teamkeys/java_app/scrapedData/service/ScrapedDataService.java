@@ -1,12 +1,15 @@
 package com.teamkeys.java_app.scrapedData.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.teamkeys.java_app.scrapedData.dto.ScrapedDataDto;
 import com.teamkeys.java_app.scrapedData.entity.ScrapedDataEntity;
 import com.teamkeys.java_app.scrapedData.repo.MatchEvents;
 import com.teamkeys.java_app.scrapedData.repo.ScrapedDataRepo;
@@ -17,7 +20,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ScrapedDataService {
+	
 	private final ScrapedDataRepo repo;
+	private final ModelMapper mapper;
+
+	
+	private ScrapedDataEntity convertToEntity(ScrapedDataDto dto) {
+		return mapper.map(dto, ScrapedDataEntity.class);
+	}
+	
+	private ScrapedDataDto convertToData(ScrapedDataEntity entity) {
+		return mapper.map(entity, ScrapedDataDto.class);
+	}
+
+	private ScrapedDataEntity findOrThrow(final UUID id) {
+		return repo.findById(id).orElseThrow(() -> new NotFoundException("Match id with id" + id + "not found"));
+	}
 	
 	public List<ScrapedDataEntity> getAll() {
 		return repo.findAll();
@@ -50,12 +68,15 @@ public class ScrapedDataService {
     	return resultsEvents;
     }
     
-    public void updateScrapedDataEntry(UUID id, ScrapedDataEntity scrapedEntity) {
-    	findOrThrow(id);
-    }
-    
-    private ScrapedDataEntity findOrThrow(final UUID id) {
-    	return repo.findById(id).orElseThrow(() -> new NotFoundException("Match id with id" + id + "not found"));
-    }
-    
+    public ScrapedDataDto updateScrapedData(ScrapedDataDto dto, UUID id) {
+
+        ScrapedDataEntity entity = findOrThrow(id);
+
+        entity.setATeamPoints(dto.getATeamPoints());
+        entity.setBTeamPoints(dto.getBTeamPoints());
+
+        repo.save(entity);
+
+        return convertToData(entity);
+    }    
 }

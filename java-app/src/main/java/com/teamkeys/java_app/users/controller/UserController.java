@@ -41,7 +41,7 @@ public class UserController {
 		service.removeUserByEmail(email);
 	}
 	
-	@PostMapping("/password-reset/{email}")
+	@PostMapping("/forgot-password/{email}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> sendToken(@PathVariable("email") String email) 
 	        throws NoSuchAlgorithmException {
@@ -78,6 +78,7 @@ public class UserController {
 	        userDataTransferObject,
 	        userDataTransferObject.getPhoneNumber()
 	    );
+	    
 	    return ResponseEntity.ok().build();
 	}
 	
