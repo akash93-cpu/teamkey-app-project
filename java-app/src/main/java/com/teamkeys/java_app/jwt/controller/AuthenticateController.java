@@ -1,9 +1,11 @@
 package com.teamkeys.java_app.jwt.controller;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,13 +23,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 class AuthenticateController {
 
-//	private final AuthenticationManager authenticationManager;
 	private final JwtUtil jwtUtil;
 	private final ApplicationUserDetailsService detailsService;
 	
-	@PostMapping("/auth")
+	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void authenticate(@RequestBody AuthenticationRequest req, HttpServletResponse response) throws Exception {
+		
 		UserEntity user;
 		
 		try {
@@ -50,14 +52,38 @@ class AuthenticateController {
 		cookie.setHttpOnly(true);
 		cookie.setSecure(true);
 		cookie.setPath("/");
-		cookie.setMaxAge(24 * 60 * 60);
+		cookie.setMaxAge(12 * 60 * 60); // 12 hour cookie lifetime
 		
 		response.addCookie(cookie);
+		
 	}
+	
+	@GetMapping("/user-token")
+	public String getUsernameToken(HttpServletRequest request) throws Exception {
+		
+	    String jwt = null;
+	    if (request.getCookies() != null) {
+	        for (Cookie cookie : request.getCookies()) {
+	            if ("jwt".equals(cookie.getName())) {
+	                jwt = cookie.getValue();
+	                break;
+	            }
+	        }
+	    }
+
+	    if (jwt == null) {
+	        throw new Exception("JWT cookie not found");
+	    }
+
+	    String username = jwtUtil.extractActualUsername(jwt);
+	    return username;
+	    
+	}	
 	
 	@PostMapping("/logout")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void logout(HttpServletResponse res) {
+		
 		Cookie cookie = new Cookie("jwt", null);
 		cookie.setHttpOnly(true);
 		cookie.setSecure(true);

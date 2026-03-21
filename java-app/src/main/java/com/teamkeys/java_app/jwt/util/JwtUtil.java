@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.stereotype.Service;
+
+import com.teamkeys.java_app.jwt.models.UserPrinciple;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
@@ -47,6 +50,10 @@ public class JwtUtil {
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+    
+    public String extractActualUsername(String token) {
+        return extractClaim(token, claims -> claims.get("username", String.class));
+    }
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
@@ -54,6 +61,11 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        
+        if (userDetails instanceof UserPrinciple userPrinciple) {
+        	claims.put("username", userPrinciple.getUserString());
+        }
+        
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -72,4 +84,5 @@ public class JwtUtil {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+    
 }

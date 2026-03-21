@@ -28,6 +28,11 @@ public class UserPrinciple implements UserDetails {
     public String getUsername() {
         return userEntity.getEmail();
     }
+    
+    // To get the user name
+    public String getUserString() {
+    	return userEntity.getUserName();
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -48,4 +53,5 @@ public class UserPrinciple implements UserDetails {
     public boolean isEnabled() {
         return userEntity.isActive();
     }
+    
 }

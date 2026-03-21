@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class ApplicationUserDetailsService implements UserDetailsService{
+public class ApplicationUserDetailsService implements UserDetailsService {
 	
 	private final UserService userService;
 	
