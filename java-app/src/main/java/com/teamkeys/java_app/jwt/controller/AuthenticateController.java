@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(allowedHeaders="Content-Type")
 class AuthenticateController {
 
 	private final JwtUtil jwtUtil;
@@ -28,6 +30,7 @@ class AuthenticateController {
 	
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.CREATED)
+	@CrossOrigin(origins="http://localhost:5173")
 	public void authenticate(@RequestBody AuthenticationRequest req, HttpServletResponse response) throws Exception {
 		
 		UserEntity user;
@@ -58,6 +61,7 @@ class AuthenticateController {
 		
 	}
 	
+	@CrossOrigin(origins="http://localhost:5173")
 	@GetMapping("/user-token")
 	public String getUsernameToken(HttpServletRequest request) throws Exception {
 		
@@ -81,6 +85,7 @@ class AuthenticateController {
 	}	
 	
 	@PostMapping("/logout")
+	@CrossOrigin(origins="http://localhost:5173")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void logout(HttpServletResponse res) {
 		

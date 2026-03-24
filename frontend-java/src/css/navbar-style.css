@@ -31,3 +31,57 @@
 .navbar .nav-link:not(.icon-link):hover::after {
   width: 100%;
 }
+
+
+/* Username dropdown toggle */
+.nav-username {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 250;
+    font-size: 1rem;
+    color: azure;
+}
+
+/* Remove the default caret colour */
+.navbar .nav-username + .dropdown-toggle::after {
+    border-top-color: azure;
+}
+
+/* Style the dropdown menu to match the navbar glass effect */
+.navbar .dropdown-menu {
+    background-color: rgba(73, 77, 82, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown items */
+.navbar .dropdown-menu .dropdown-item {
+    color: azure;
+    font-weight: 250;
+}
+
+/* Signed in as - disabled item */
+.navbar .dropdown-menu .dropdown-item.disabled {
+    color: rgba(240, 255, 255, 0.5);
+}
+
+.navbar .dropdown-menu .dropdown-item:hover:not(.disabled) {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: whitesmoke;
+}
+
+/* Logout item */
+.navbar .dropdown-menu .dropdown-item.text-danger {
+    color: #ff6b6b !important;
+}
+
+.navbar .dropdown-menu .dropdown-item.text-danger:hover {
+    background-color: rgba(255, 107, 107, 0.15);
+    color: #ff4444 !important;
+}
+
+/* Divider */
+.navbar .dropdown-divider {
+    border-color: rgba(255, 255, 255, 0.15);
+}

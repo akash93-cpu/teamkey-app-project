@@ -227,7 +227,7 @@ export default function DisplayTable() {
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" style={{ textAlign: 'center' }}>
-                                                    No data available
+                                                    No data available! Please login! 
                                                 </td>
                                             </tr>
                                         )}

@@ -1,13 +1,56 @@
+import { useState, useEffect, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaRegUserCircle } from "react-icons/fa";
+import { UserLoginPopup } from './pages/Modals.jsx';
 
 import logo from './assets/logo.png';
 import './css/navbar-style.css';
 
 export default function NavigationBar() {
+
+    const [showModal, setShowModal] = useState(false);
+    const [username, setUsername] = useState(null);
+    const intervalRef = useRef(null);
+
+    const fetchUsername = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/user-token', {
+                method: 'GET',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                const name = await response.text();
+                setUsername(name);
+            } else {
+                setUsername(null);
+            }
+        } catch (err) {
+            setUsername(null);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await fetch('http://localhost:8080/logout', {
+                method: 'POST',
+                credentials: 'include',
+            });
+        } catch (err) {
+            console.error('Logout failed:', err);
+        } finally {
+            setUsername(null); // Clear username regardless of response
+        }
+    };
+
+    useEffect(() => {
+        fetchUsername();
+        intervalRef.current = setInterval(fetchUsername, 1000);
+        return () => clearInterval(intervalRef.current);
+    }, []);
 
     return (
         <>
@@ -30,14 +73,45 @@ export default function NavigationBar() {
                         </Nav>
 
                         <Nav className="ms-auto">
-                            <Nav.Link href="/login" className="icon-link">
-                                <FaRegUserCircle size={26} />
-                            </Nav.Link>
+                            {username ? (
+                                <NavDropdown
+                                    align="end"
+                                    title={
+                                        <span className="nav-username">
+                                            <FaRegUserCircle size={20} />
+                                            {username}
+                                        </span>
+                                    }
+                                >
+                                    <NavDropdown.Item disabled>
+                                        Signed in as <strong>{username}</strong>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item
+                                        className="text-danger"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            ) : (
+                                <Nav.Link
+                                    className="icon-link"
+                                    onClick={() => setShowModal(true)}
+                                >
+                                    <FaRegUserCircle size={26} />
+                                </Nav.Link>
+                            )}
                         </Nav>
+
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <UserLoginPopup
+                show={showModal}
+                handleClose={() => setShowModal(false)}
+                onLoginSuccess={fetchUsername}
+            />
         </>
     );
-
 }
