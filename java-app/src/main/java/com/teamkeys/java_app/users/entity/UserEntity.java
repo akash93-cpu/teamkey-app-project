@@ -22,7 +22,7 @@ public class UserEntity {
 	@Column(name = "user_id")
 	private int userId;
 	
-	@Column(name = "email")
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "username")

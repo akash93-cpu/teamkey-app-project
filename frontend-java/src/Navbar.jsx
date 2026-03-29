@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaRegUserCircle } from "react-icons/fa";
-import { UserLoginPopup } from './pages/Modals.jsx';
+import { UserLoginPopup, UserUpdatePopup } from './pages/Modals.jsx';
 
 import logo from './assets/logo.png';
 import './css/navbar-style.css';
@@ -12,6 +12,7 @@ import './css/navbar-style.css';
 export default function NavigationBar() {
 
     const [showModal, setShowModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [username, setUsername] = useState(null);
     const intervalRef = useRef(null);
 
@@ -42,7 +43,7 @@ export default function NavigationBar() {
         } catch (err) {
             console.error('Logout failed:', err);
         } finally {
-            setUsername(null); // Clear username regardless of response
+            setUsername(null);
         }
     };
 
@@ -59,7 +60,7 @@ export default function NavigationBar() {
                     <Navbar.Brand id="nav-logo" href="/"><img src={logo} /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        
+
                         <Nav className="mx-auto gap-4">
                             <Nav.Link href="/table">Matches</Nav.Link>
                             <Nav.Link href='/stats-home'>Statistics</Nav.Link>
@@ -87,6 +88,11 @@ export default function NavigationBar() {
                                         Signed in as <strong>{username}</strong>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
+
+                                    <NavDropdown.Item onClick={() => setShowUpdateModal(true)}>
+                                        Update my details
+                                    </NavDropdown.Item>
+
                                     <NavDropdown.Item
                                         className="text-danger"
                                         onClick={handleLogout}
@@ -95,13 +101,23 @@ export default function NavigationBar() {
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             ) : (
-                                <Nav.Link
-                                    className="icon-link"
-                                    onClick={() => setShowModal(true)}
+                                <NavDropdown
+                                    align="end"
+                                    title={
+                                        <span className="icon-link">
+                                            <FaRegUserCircle size={26} />
+                                        </span>
+                                    }
+                                    id="user-dropdown"
                                 >
-                                    <FaRegUserCircle size={26} />
-                                </Nav.Link>
-                            )}
+                                    <NavDropdown.Item onClick={() => setShowModal(true)}>
+                                        Sign In
+                                    </NavDropdown.Item>
+
+                                    <NavDropdown.Item href='/register'>
+                                        Register
+                                    </NavDropdown.Item>
+                                </NavDropdown>)}
                         </Nav>
 
                     </Navbar.Collapse>
@@ -112,6 +128,11 @@ export default function NavigationBar() {
                 handleClose={() => setShowModal(false)}
                 onLoginSuccess={fetchUsername}
             />
+            <UserUpdatePopup
+    show={showUpdateModal}
+    handleClose={() => setShowUpdateModal(false)}
+    onUpdateSuccess={fetchUsername}
+/>
         </>
     );
 }

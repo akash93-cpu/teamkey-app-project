@@ -12,6 +12,7 @@ import SupportPage from './pages/Support.jsx';
 import About from './pages/About.jsx';
 import Footer from './Footer.jsx';
 import UserDashboard from './pages/Dashboard.jsx';
+import RegisterUser from './pages/Register.jsx';
 import TeamStats from './pages/TeamStats.jsx';
 import Trends from './pages/TrendsPage.jsx';
 
@@ -33,6 +34,7 @@ export default function IndexPage() {
                 <Route path='/stats-home' element={<StatsHomePage />}/>
                 <Route path='/sts-main' element={<StsMain />}/>
                 <Route path='/trends' element={<Trends />}/>
+                <Route path='/register' element={<RegisterUser />}/>
                 <Route path='/teams-stats' element={<TeamStats />}/>
                 <Route path='/support' element={<SupportPage />} />
                 <Route path='/about-us' element={<About />}/>

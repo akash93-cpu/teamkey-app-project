@@ -15,7 +15,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TeamKeysEmailClass {
 	
-	String message() default "Only @teamkeys.com email addresses are allowed!";
+	String message() default "Only @teamkeys.net email addresses are allowed!";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 	

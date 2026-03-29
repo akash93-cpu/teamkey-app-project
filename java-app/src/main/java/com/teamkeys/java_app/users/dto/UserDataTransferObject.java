@@ -1,5 +1,6 @@
 package com.teamkeys.java_app.users.dto;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -16,7 +17,10 @@ public class UserDataTransferObject {
 //	private int userId; not used for this dto
 	
     @NotBlank(message = "Email cannot be empty!")
-    @TeamKeysEmailClass // not used for development or testing, only in production
+    @Email(message = "Invalid email format!")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@email\\.com$", 
+    message = "Email must be from email.com (case sensitive)")
+//    @TeamKeysEmailClass // not used for development or testing, only in production -- remove @Pattern
 	private String email;
     
     @NotBlank(message = "Username cannot be empty!")

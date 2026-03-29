@@ -7,7 +7,7 @@ public class EmailValidator implements ConstraintValidator<TeamKeysEmailClass, S
 	@Override
 	public boolean isValid(String email, ConstraintValidatorContext context) {
 		if (email == null) return false;
-		return email.endsWith("@teamkeys.com");
+		return email.endsWith("@teamkeys.net");
 	}
 
 }

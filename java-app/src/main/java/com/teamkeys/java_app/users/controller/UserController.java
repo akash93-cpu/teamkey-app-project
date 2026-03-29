@@ -37,7 +37,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/delete-user/{email}")
-	@PreAuthorize("authentication.name == 'admin@teamkeys.com'")
+	@PreAuthorize("authentication.name == 'admin@teamkeys.net'")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUserByEmail(@PathVariable("email") String email) {
 		service.removeUserByEmail(email);
@@ -60,15 +60,7 @@ public class UserController {
 	    service.resetUserPassword(token, email, password);
 	    return ResponseEntity.ok("Password reset for user " + email + " successful!");
 	}
-	
-//	@PutMapping("/update-user/{email}")
-//	public void updateUser(@Valid @RequestBody @PathVariable("email") String email, UserDataTransferObject userDataTransferObject) 
-//			throws NoSuchAlgorithmException {
-//		
-//		service.updateUser(email, userDataTransferObject, userDataTransferObject.getPassword(), userDataTransferObject.getPhoneNumber());
-//		
-//	}
-	
+		
 	@PutMapping("/update-user/{email}")
 	public ResponseEntity<Void> updateUser(
 	        @PathVariable("email") String email,
@@ -82,6 +74,7 @@ public class UserController {
 	    );
 	    
 	    return ResponseEntity.ok().build();
+	    
 	}
 	
 	@GetMapping("/confirm-token")

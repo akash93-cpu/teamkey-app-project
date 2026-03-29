@@ -62,8 +62,25 @@ class AuthenticateController {
 	}
 	
 	@CrossOrigin(origins="http://localhost:5173")
+	@GetMapping("/get-email")
+	public String getUserEmail(HttpServletRequest req) {
+		String jwtString = null;
+		if (req.getCookies() != null) {
+			for (Cookie cookie : req.getCookies()) {
+				if ("jwt".equals(cookie.getName())) {
+					jwtString = cookie.getValue();
+					break;
+				}
+			}
+		}
+		if (jwtString == null) System.out.println("JWT cookie not found.");
+		String emailString = jwtUtil.extractUsername(jwtString);
+		return emailString;
+	}
+	
+	@CrossOrigin(origins="http://localhost:5173")
 	@GetMapping("/user-token")
-	public String getUsernameToken(HttpServletRequest request) throws Exception {
+	public String getUsernameToken(HttpServletRequest request) {
 		
 	    String jwt = null;
 	    if (request.getCookies() != null) {
@@ -76,7 +93,7 @@ class AuthenticateController {
 	    }
 
 	    if (jwt == null) {
-	        throw new Exception("JWT cookie not found");
+	        System.out.println("JWT cookie not found");
 	    }
 
 	    String username = jwtUtil.extractActualUsername(jwt);

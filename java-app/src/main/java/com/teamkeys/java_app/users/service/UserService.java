@@ -47,6 +47,9 @@ public class UserService {
 		
 		if (password == null || password.isBlank()) throw new IllegalArgumentException("Password required!");
 		
+		String normalizedEmailString = userDto.getEmail().trim().toLowerCase();
+		userDto.setEmail(normalizedEmailString);
+		
 		String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 		
 		var user = convertToEntity(userDto);
@@ -67,7 +70,6 @@ public class UserService {
 				token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
 		tokenService.save(confirmToken);
 		emailService.sendSimpleEmail(userDto.getEmail(), token);
-//		System.out.println(token);
 		
 		return convertToData(user);
 	}
