@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaRegUserCircle } from "react-icons/fa";
-import { UserLoginPopup, UserUpdatePopup } from './pages/Modals.jsx';
+import { UserLoginPopup, UserUpdatePopup, UserPasswordResetPopup } from './pages/Modals.jsx';
 
 import logo from './assets/logo.png';
 import './css/navbar-style.css';
@@ -13,6 +13,7 @@ export default function NavigationBar() {
 
     const [showModal, setShowModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [showPasswordReset, setShowPasswordReset] = useState(false);
     const [username, setUsername] = useState(null);
     const intervalRef = useRef(null);
 
@@ -90,7 +91,7 @@ export default function NavigationBar() {
                                     <NavDropdown.Divider />
 
                                     <NavDropdown.Item onClick={() => setShowUpdateModal(true)}>
-                                        Update my details
+                                        Update your username
                                     </NavDropdown.Item>
 
                                     <NavDropdown.Item
@@ -117,6 +118,11 @@ export default function NavigationBar() {
                                     <NavDropdown.Item href='/register'>
                                         Register
                                     </NavDropdown.Item>
+
+                                    <NavDropdown.Item onClick={() => setShowPasswordReset(true)}>
+                                        Reset password 
+                                    </NavDropdown.Item>
+
                                 </NavDropdown>)}
                         </Nav>
 
@@ -131,8 +137,9 @@ export default function NavigationBar() {
             <UserUpdatePopup
     show={showUpdateModal}
     handleClose={() => setShowUpdateModal(false)}
-    onUpdateSuccess={fetchUsername}
-/>
+    onUpdateSuccess={fetchUsername} />
+
+<UserPasswordResetPopup show={showPasswordReset} handleClose={() => setShowPasswordReset(false)} />
         </>
     );
 }

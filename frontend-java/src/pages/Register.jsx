@@ -7,7 +7,6 @@ export default function RegisterUser() {
     email: "",
     password: "",
     userName: "",
-    phoneNumber: "",
   });
 
   const [showPassword, setShowPassword] = useState(false); 
@@ -39,7 +38,6 @@ export default function RegisterUser() {
           email: "",
           password: "",
           userName: "",
-          phoneNumber: "",
         });
         nav("/");
       }
@@ -108,15 +106,6 @@ export default function RegisterUser() {
             {showPassword ? "Hide" : "Show"}
           </button>
         </div>
-
-        <input
-          type="tel"
-          name="phoneNumber"
-          placeholder="Phone Number"
-          value={formData.phoneNumber}
-          onChange={handleChange}
-          required
-        />
 
         <button type="submit">Register</button>
 

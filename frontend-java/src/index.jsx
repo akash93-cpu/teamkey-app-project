@@ -15,6 +15,7 @@ import UserDashboard from './pages/Dashboard.jsx';
 import RegisterUser from './pages/Register.jsx';
 import TeamStats from './pages/TeamStats.jsx';
 import Trends from './pages/TrendsPage.jsx';
+import ResetUserPassword from './pages/ResetPassword.jsx';
 
 export default function IndexPage() {
 
@@ -34,6 +35,7 @@ export default function IndexPage() {
                 <Route path='/stats-home' element={<StatsHomePage />}/>
                 <Route path='/sts-main' element={<StsMain />}/>
                 <Route path='/trends' element={<Trends />}/>
+                <Route path='/reset-password' element={<ResetUserPassword />}/>
                 <Route path='/register' element={<RegisterUser />}/>
                 <Route path='/teams-stats' element={<TeamStats />}/>
                 <Route path='/support' element={<SupportPage />} />

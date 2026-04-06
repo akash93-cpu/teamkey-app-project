@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Toaster, toast } from "react-hot-toast";
+
+// User update modal here -------------------------------------------------------------------------------
 
 export function UserUpdatePopup({ show, handleClose, onUpdateSuccess }) {
 
   const [userName, setUserName] = useState("");
-  const [phoneNumber, setphoneNumber] = useState("");
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,24 +34,22 @@ export function UserUpdatePopup({ show, handleClose, onUpdateSuccess }) {
       const email = await emailRequest.text();
 
       console.log("User email is:", email);
-      setUserEmail(email);
 
-      const response = await fetch(`http://localhost:8080/update-user/${userEmail}`, {
+      const response = await fetch(`http://localhost:8080/update-username/${email}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ userName, phoneNumber }),
+        body: JSON.stringify({ userName }),
       });
-
+      
       if (!response.ok) {
         const message = await response.text();
         setError(message || "Update failed.");
         return;
       }
-
+      toast.success("Username updated! Please logout and login again.");
       // reset form
       setUserName("");
-      setphoneNumber("");
       setValidated(false);
 
       onUpdateSuccess?.(); // refresh username in navbar
@@ -65,13 +64,14 @@ export function UserUpdatePopup({ show, handleClose, onUpdateSuccess }) {
 
   const handleModalClose = () => {
     setUserName("");
-    setphoneNumber("");
     setValidated(false);
     setError(null);
     handleClose();
   };
 
   return (
+    <>
+    <Toaster />
     <Modal show={show} onHide={handleModalClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Update Your Details</Modal.Title>
@@ -95,19 +95,6 @@ export function UserUpdatePopup({ show, handleClose, onUpdateSuccess }) {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>phoneNumber Number</Form.Label>
-            <Form.Control
-              type="tel"
-              value={phoneNumber}
-              required
-              onChange={(e) => setphoneNumber(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a phoneNumber number.
-            </Form.Control.Feedback>
-          </Form.Group>
-
         </Modal.Body>
 
         <Modal.Footer>
@@ -120,10 +107,104 @@ export function UserUpdatePopup({ show, handleClose, onUpdateSuccess }) {
         </Modal.Footer>
       </Form>
     </Modal>
+    </>
   );
 }
 
-// Login Modal here -------------------------------------------------------------------------------
+// Password reset modal here -------------------------------------------------------------------------------
+
+export function UserPasswordResetPopup({ show, handleClose, onPasswordReset }) {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmitReset = async (event) => {
+    event.preventDefault();
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const request = await fetch(`http://localhost:8080/forgot-password/${email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email }),
+      });
+
+      if (!request.ok) {
+        try {
+          const data = await request.json();
+          setError(data.message || "Invalid email.");
+        } catch {
+          setError("Something went wrong.");
+        }
+        return;
+      }
+
+      setSuccess(true);
+      setEmail("");
+      onPasswordReset?.();
+
+    } catch (error) {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleModalClose = () => {
+    setEmail("");
+    setError(null);
+    setSuccess(false);
+    handleClose();
+  };
+
+  return (
+    <Modal show={show} onHide={handleModalClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>TeamKeys - Password Reset</Modal.Title>
+      </Modal.Header>
+
+      <Form onSubmit={handleSubmitReset}>
+        <Modal.Body>
+
+          {error && <Alert variant="danger">{error}</Alert>}
+          {success && (
+            <Alert variant="success">
+              If that email exists, a reset link has been sent.
+            </Alert>
+          )}
+
+          <Form.Group controlId="resetEmail" className="mb-3">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              required
+              disabled={success}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit" disabled={loading || success}>
+            {loading ? "Sending..." : "Send Reset Link"}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
+  );
+}
+
+// Login modal here -------------------------------------------------------------------------------
 
 export function UserLoginPopup({ show, handleClose, onLoginSuccess }) {
   
@@ -158,8 +239,12 @@ export function UserLoginPopup({ show, handleClose, onLoginSuccess }) {
       });
 
       if (!response.ok) {
-        const message = await response.text();
-        setError(message || "Invalid email or password.");
+        try {
+          const data = await response.json();
+          setError(data.message || "Invalid email or password.");
+        } catch {
+          setError("Invalid email or password.");
+        }
         return;
       }
 

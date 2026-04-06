@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.teamkeys.java_app.exceptions.NotFoundException;
 import com.teamkeys.java_app.exceptions.BadRequestException;
 import com.teamkeys.java_app.users.dto.UserDataTransferObject;
+import com.teamkeys.java_app.users.dto.UsernameDto;
 import com.teamkeys.java_app.users.entity.TokenEntity;
 import com.teamkeys.java_app.users.entity.UserEntity;
 import com.teamkeys.java_app.users.repo.UserRepository;
@@ -58,8 +59,6 @@ public class UserService {
 		if (existsEmail) throw new BadRequestException("Email " + user.getEmail() + " is taken!");
 		var existsUsername = repository.existsByUserName(userDto.getUserName());
 		if (existsUsername) throw new BadRequestException("Username " + user.getUserName() + " is taken!");
-		var existsPhone = repository.existsByPhoneNumber(userDto.getPhoneNumber());
-		if (existsPhone) throw new BadRequestException("Phone number " + user.getPhoneNumber() + "already exists!");
 		
 		user.setPassword(passwordHash);
 		
@@ -92,7 +91,9 @@ public class UserService {
 	}
 	
 	public void resetUserPassword(String token, String email, String password) 
-	        throws NoSuchAlgorithmException {
+	        throws IllegalArgumentException, IllegalStateException {
+		
+		String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 	    UserEntity user = findOrThrow(email);
 
 	    TokenEntity confirmToken = tokenService.findByToken(token)
@@ -106,14 +107,19 @@ public class UserService {
 	        throw new IllegalStateException("Token expired!");
 	    }
 
-	    // Ensure the token belongs to the user making the request
 	    if (!confirmToken.getUser().getEmail().equals(email)) {
 	        throw new IllegalArgumentException("Token does not match the provided email!");
 	    }
 
 	    confirmToken.setConfirmedAt(LocalDateTime.now());
 	    tokenService.save(confirmToken);
-
+	    
+	    if (password == null || password.isBlank()) throw new IllegalArgumentException("Password cannot be blank!");
+	    
+	    if (!password.matches(regexPattern)) throw new IllegalArgumentException("Password not strong enough!");
+	    
+	    if (password.length() < 8 || password.length() > 16) throw new IllegalArgumentException("Password must be within 8 to 16 characters!");
+	    
 	    if (password != null && !password.isBlank()) {
 	        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
 	    }
@@ -155,16 +161,14 @@ public class UserService {
 				);
 	}
 	
-	public void updateUser(String email, UserDataTransferObject userDto, long phoneNumber) 
-			throws NoSuchAlgorithmException {
-		
-		var user = findOrThrow(email);
-		var userParam = convertToEntity(userDto);
-		
-		user.setUserName(userParam.getUserName());
-		user.setPhoneNumber(phoneNumber);
-				
-		repository.save(user);
+	public String updateUsername(String email, UsernameDto dto) {
+
+	    var user = findOrThrow(email);
+
+	    user.setUserName(dto.getUserName());
+
+	    repository.save(user);
+	    return dto.getUserName();
 	}
 	
 }

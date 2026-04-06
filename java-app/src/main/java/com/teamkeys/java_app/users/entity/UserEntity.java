@@ -30,10 +30,7 @@ public class UserEntity {
 	
 	@Column(name = "password")
 	private String password;
-	
-	@Column(name = "phone")
-	private long phoneNumber;
-	
+		
 	@Column(name = "active")
 	private boolean active = false;
 	

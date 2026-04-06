@@ -101,9 +101,9 @@ export default function Trends() {
         <>
             <Toaster />
             <div className="trends-main">
-                <h4>Trend Data</h4>
+                <h4>Actual vs. Predicted data</h4>
                   Match data for team {data.allTrendData.length > 0 ? data.allTrendData[0].teamName : "N/A"}
-
+                <p style={{ padding: '2em' }}>Trained using machine learning algorithms</p>
                 <div className="scoped-charts">
                     <Line className="line-main"
                         data={dataChart}

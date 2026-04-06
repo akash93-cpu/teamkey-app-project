@@ -5,6 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import lombok.AllArgsConstructor;
 
@@ -54,10 +56,11 @@ public class EmailService {
                     Hello from Java Spring Team!
                     You have requested to reset your password:
 
-                    http://localhost:8080/reset-password?token=%s
+                    http://localhost:5173/reset-password?token=%s&email=%s
                     
                     Please note -> You have 15 minutes to change your password once you get this email.
-                    """.formatted(token);
+                    """.formatted(token, URLEncoder.encode(to, StandardCharsets.UTF_8));
+            
 			message.setText(body);
 			mailSender.send(message);
 			  

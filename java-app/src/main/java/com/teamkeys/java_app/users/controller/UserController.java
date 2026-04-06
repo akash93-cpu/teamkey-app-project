@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamkeys.java_app.users.dto.UserDataTransferObject;
+import com.teamkeys.java_app.users.dto.UsernameDto;
 import com.teamkeys.java_app.users.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,17 +62,13 @@ public class UserController {
 	    return ResponseEntity.ok("Password reset for user " + email + " successful!");
 	}
 		
-	@PutMapping("/update-user/{email}")
+	@PutMapping("/update-username/{email}")
 	public ResponseEntity<Void> updateUser(
 	        @PathVariable("email") String email,
-	        @Valid @RequestBody UserDataTransferObject userDataTransferObject)
+	        @Valid @RequestBody UsernameDto updateUsernameDTO)
 	        throws NoSuchAlgorithmException {
 
-	    service.updateUser(
-	        email,
-	        userDataTransferObject,
-	        userDataTransferObject.getPhoneNumber()
-	    );
+	    service.updateUsername(email, updateUsernameDTO);
 	    
 	    return ResponseEntity.ok().build();
 	    
@@ -81,6 +78,7 @@ public class UserController {
 	public ResponseEntity<String> confirmToken(@RequestParam("token") String token) {
 	    service.confirmUser(token);
 	    return ResponseEntity.ok("Token confirmed successfully! Your account is now activated!");
+	    
 	}
 	
 }
