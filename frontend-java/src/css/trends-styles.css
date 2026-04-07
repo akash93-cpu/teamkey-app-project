@@ -22,3 +22,24 @@
     width: 100% !important; /* Make the chart fill the container */
     max-width: 100%;        /* Prevent overflow */
 }
+
+@keyframes pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1.1); }
+}
+
+.pop-button {
+    transition: transform 0.2s ease;
+    background: #5850fa;
+background: linear-gradient(90deg,rgba(88, 80, 250, 1) 0%, rgba(115, 9, 121, 1) 50%);
+
+}
+
+.pop-button:hover {
+    animation: pop 0.3s ease forwards;
+}
+
+.pop-button:active {
+    transform: scale(0.95);
+}

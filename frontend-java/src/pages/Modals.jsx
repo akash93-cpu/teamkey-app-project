@@ -114,6 +114,7 @@ export function UserUpdatePopup({ show, handleClose, onUpdateSuccess }) {
 // Password reset modal here -------------------------------------------------------------------------------
 
 export function UserPasswordResetPopup({ show, handleClose, onPasswordReset }) {
+  
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -214,6 +215,7 @@ export function UserLoginPopup({ show, handleClose, onLoginSuccess }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordReset, setShowPasswordReset] = useState(false);
 
   const handleSubmit = async (event) => {
     
@@ -272,6 +274,7 @@ export function UserLoginPopup({ show, handleClose, onLoginSuccess }) {
   };
 
   return (
+    <>
     <Modal show={show} onHide={handleModalClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>TeamKeys User Login</Modal.Title>
@@ -311,21 +314,129 @@ export function UserLoginPopup({ show, handleClose, onLoginSuccess }) {
             <Form.Control.Feedback type="invalid">
               Password must be between 8 - 16 characters in length.
             </Form.Control.Feedback>
-                      <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              cursor: "pointer",
-              background: "none",
-              border: "black",
-              color: "black"
-            }}
-          >
-            {showPassword ? "Hide Password" : "Show Password"}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                cursor: "pointer",
+                background: "none",
+                border: "black",
+                color: "black"
+              }}
+            >
+              {showPassword ? "Hide Password" : "Show Password"}
           </button>
 
           </Form.Group>
+
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="link" className="me-auto" onClick={() => setShowPasswordReset(true)}>Forgot Password</Button>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
+    <UserPasswordResetPopup show={showPasswordReset} handleClose={() => setShowPasswordReset(false)} />
+
+    </>
+  );
+}
+
+// Trends modal here -------------------------------------------------------------------------------
+
+export function TrendsModal({ show, handleClose }) {
+
+  const TREND_ID = 1; 
+
+  const [points, setPoints] = useState(Array(9).fill(""));
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (index, value) => {
+    const updated = [...points];
+    updated[index] = value;
+    setPoints(updated);
+  };
+
+  const handleSubmitTrends = async (event) => {
+    event.preventDefault();
+
+    if (points.some(p => p === "")) {
+      setError("Please fill in all 9 values.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("http://localhost:8080/trends/predicted-score", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          trendId: TREND_ID,
+          predictedScore: points.map(Number)
+        }),
+      });
+
+      if (!response.ok) {
+        setError("Error! Only TeamKeys members are allowed to make edits!");
+        return;
+      }
+
+      setSuccess(true);
+      setPoints(Array(9).fill(""));
+
+    } catch (err) {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleModalClose = () => {
+    setPoints(Array(9).fill(""));
+    setError(null);
+    setSuccess(false);
+    handleClose();
+  };
+
+  return (
+    <Modal show={show} onHide={handleModalClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Enter Trend Predictions</Modal.Title>
+      </Modal.Header>
+
+      <Form onSubmit={handleSubmitTrends}>
+        <Modal.Body>
+
+          {error && <Alert variant="danger">{error}</Alert>}
+          {success && (
+            <Alert variant="success">
+              Trends submitted successfully!
+            </Alert>
+          )}
+
+          {points.map((value, index) => (
+            <Form.Group key={index} className="mb-2">
+              <Form.Label>Point {index + 1}</Form.Label>
+              <Form.Control
+                type="number"
+                value={value}
+                required
+                onChange={(e) => handleChange(index, e.target.value)}
+              />
+            </Form.Group>
+          ))}
 
         </Modal.Body>
 
@@ -334,7 +445,7 @@ export function UserLoginPopup({ show, handleClose, onLoginSuccess }) {
             Close
           </Button>
           <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Submitting..." : "Submit"}
           </Button>
         </Modal.Footer>
       </Form>

@@ -13,7 +13,6 @@ export default function NavigationBar() {
 
     const [showModal, setShowModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
-    const [showPasswordReset, setShowPasswordReset] = useState(false);
     const [username, setUsername] = useState(null);
     const intervalRef = useRef(null);
 
@@ -119,10 +118,6 @@ export default function NavigationBar() {
                                         Register
                                     </NavDropdown.Item>
 
-                                    <NavDropdown.Item onClick={() => setShowPasswordReset(true)}>
-                                        Reset password 
-                                    </NavDropdown.Item>
-
                                 </NavDropdown>)}
                         </Nav>
 
@@ -139,7 +134,6 @@ export default function NavigationBar() {
     handleClose={() => setShowUpdateModal(false)}
     onUpdateSuccess={fetchUsername} />
 
-<UserPasswordResetPopup show={showPasswordReset} handleClose={() => setShowPasswordReset(false)} />
         </>
     );
 }
